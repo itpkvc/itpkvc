@@ -222,7 +222,7 @@ function deleteUser(id){
   event.preventDefault();
   Swal.fire({
     title: 'ต้องการลบหรอไม่?',
-    text: "ถ้าคุณต้องลบกรุณากดตกลงเพื่อลบ!",
+    text: "ถ้าคุณต้องการยกเลิกกรุณากดตกลงเพื่อยกเลิก!",
     icon: 'warning',
     showCancelButton: true,
     confirmButtonColor: '#3085d6',

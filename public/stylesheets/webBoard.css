@@ -69,7 +69,6 @@ li.borderless {
   object-fit: cover;
 }
 .hiddenTextChat{
-  word-wrap: break-word;
   overflow: hidden;
   text-overflow: ellipsis;
   display: -webkit-box;
@@ -133,7 +132,6 @@ li.borderless {
   border-radius: 10px;
 }
 .hiddenText{
-  word-wrap: break-word;
   height: 72px;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -141,9 +139,6 @@ li.borderless {
   -webkit-line-clamp: 3; /* number of lines to show */
   -webkit-box-orient: vertical;
   
-}
-#readMore{
-  word-wrap: break-word;
 }
 /*------------------------------------*/
 .imageCss{

@@ -86,11 +86,9 @@ $( document ).ready(function() {
                         if(resultImage.length == 0){
                         div.innerHTML += `
                         <div class="row  pl-5 mb-3  allTheme">
-                        
                             <div class="col-lg-12 col-md-12 col-sm-12 mt-2 ">
                                 <div >
                                     <h4 class="font-weight-bold showSubject">${value.subject}</h4>
-                                    <img src="/upload/${value.user.image}" class="rounded-circle" style="width: 40px; height: 40px; object-fit: cover;">
                                     <small class="font-weight-bold">โดย ${value.user.firstname + ' ' + value.user.lastname +
                                     ' ('+nickname +') '+ ' ' + 'เเผนก' + ' ' +  value.department.name + ' ' + date}</small>
                                     <p class="hiddenText">
@@ -110,15 +108,13 @@ $( document ).ready(function() {
                                 <img id="showThemeImage${key}"onclick="largeImage('${resultImage[0].name}')" class="showThemeImage" src="/upload/${resultImage[0].name}" alt="">
                             </div>
                             <div class="col-lg-9 col-md-7 mt-2">
-                            <div class="container">
+                            <div >
                                 <h4 class="font-weight-bold showSubject">${value.subject}</h4>
-                                <img src="/upload/${value.user.image}" class="rounded-circle" style="width: 40px; height: 40px; object-fit: cover;">
                                 <small class="font-weight-bold">โดย ${value.user.firstname + ' ' + value.user.lastname +
                                 ' ('+nickname +') '+ ' ' + 'เเผนก' + ' ' +  value.department.name + ' ' + date}</small>
                                 <p class="hiddenText">
                                     ${value.material}
                                 </p>
-                                
                             </div>
                             <div class="d-flex justify-content-end align-self-end">
                                     <div class="d-inline btn btn-primary mr-2 mb-2 "onClick="goChat('${value._id}')">เข้าร่วมกระทู้</div>

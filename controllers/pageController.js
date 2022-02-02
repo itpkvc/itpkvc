@@ -1,182 +1,11 @@
 const User = require('../models/userModel'); //Model DB
 const Department = require('../models/departModel');
-const News = require("../models/newsModel");
-const moment = require("moment")
 const authMiddleware = require('../middlewares/authMiddleware');
 const session = require('express-session');
-const mongoose = require('mongoose');
 var Objectid = require('mongodb').ObjectID;
 exports.index=async(req,res,next)=>{
     var message = req.query.message
-
     res.render('index', {message});
-}
-exports.news = async(req,res) =>{
-    var user = req.user
-    var message = req.query.message
-    var departments = await Department.find(); 
-    res.render('news', {message , departments , user});
-}
-
-exports.news_info = async(req,res) =>{
-    req.query.id = new Objectid(req.query.id)
-    var departments = await Department.find(); 
-    var message = req.query.message
-    var user = req.user
-    //console.log(req.user._id)
-    var news = await News.aggregate([  
-        {
-            $match: { _id: req.query.id }
-        },
-        {
-            "$lookup": {
-                "from": "departments",
-                "localField": "department_id",
-                "foreignField": "_id",
-                "as": "department"
-            }
-        },
-        {
-            $unwind : '$department'
-        },
-        {
-            "$lookup": {
-                "from": "users",
-                "localField": "user_id",
-                "foreignField": "_id",
-                "as": "user"
-            }
-        },
-        {
-            $unwind : '$user'
-        },
-        {
-            $sort: {  updated: -1 }
-        }
-    ])
-    //console.log(news)
-    res.render('news_info',{message , news , moment , departments , user})
-}
-exports.news_read = async(req,res) =>{
-    req.query.id = new Objectid(req.query.id)
-    var message = req.query.message
-    //console.log(req.user._id)
-    var news = await News.aggregate([  
-        {
-            $match: { _id: req.query.id }
-        },
-        {
-            "$lookup": {
-                "from": "departments",
-                "localField": "department_id",
-                "foreignField": "_id",
-                "as": "department"
-            }
-        },
-        {
-            $unwind : '$department'
-        },
-        {
-            "$lookup": {
-                "from": "users",
-                "localField": "user_id",
-                "foreignField": "_id",
-                "as": "user"
-            }
-        },
-        {
-            $unwind : '$user'
-        },
-        {
-            $sort: {  updated: -1 }
-        }
-    ])
-    console.log(news)
-    res.render('news_read',{message , news , moment})
-}
-exports.news_show = async(req,res) =>{
-    var message = req.query.message
-    req.user.department_id = new Objectid(req.user.department_id)
-    var department
-    if(req.user.role == 'system'){
-        department ={$exists: true}
-    }else{
-        department = req.user.department_id
-    }
-    var news = await News.aggregate([
-        {
-            $match: { department_id: department }
-        },
-        {
-            "$lookup": {
-                "from": "departments",
-                "localField": "department_id",
-                "foreignField": "_id",
-                "as": "department"
-            }
-        },
-        {
-            $unwind : '$department'
-        },
-        {
-            "$lookup": {
-                "from": "users",
-                "localField": "user_id",
-                "foreignField": "_id",
-                "as": "user"
-            }
-        },
-        {
-            $unwind : '$user'
-        },
-        {
-            $sort: {  updated: -1 }
-        }
-    ])
-    console.log(news)
-    res.render('news_show',{message , news , moment})
-}
-exports.news_ = async(req,res) =>{
-    var message = req.query.message
-    req.user.department_id = new Objectid(req.user.department_id)
-    var department
-    if(req.user.role == 'system'){
-        department ={$exists: true}
-    }else{
-        department = req.user.department_id
-    }
-    var news = await News.aggregate([
-        {
-            $match: { department_id: department }
-        },
-        {
-            "$lookup": {
-                "from": "departments",
-                "localField": "department_id",
-                "foreignField": "_id",
-                "as": "department"
-            }
-        },
-        {
-            $unwind : '$department'
-        },
-        {
-            "$lookup": {
-                "from": "users",
-                "localField": "user_id",
-                "foreignField": "_id",
-                "as": "user"
-            }
-        },
-        {
-            $unwind : '$user'
-        },
-        {
-            $sort: {  updated: -1 }
-        }
-    ])
-    console.log(news)
-    res.render('news_',{message , news , moment})
 }
 exports.logout=(req,res,next)=>{
     req.logout();
@@ -218,19 +47,8 @@ exports.systemDepart=(req,res,next)=>{
 exports.systemUser=(req,res,next)=>{
     var message = req.query.message
     var user_id = req.query.user_id
-    var user_= req.user
-    req.user.department_id = new Objectid(req.user.department_id)
-    var department
-    if(req.user.role == 'system'){
-        department ={$exists: true}
-    }else{
-        department = req.user.department_id
-    }
-    //console.log(user_id)
+    console.log(user_id)
     User.aggregate([
-        {
-            $match: { department_id: department }
-        },
         {
             "$lookup": {
                 "from": "departments",
@@ -248,46 +66,7 @@ exports.systemUser=(req,res,next)=>{
                 return res.status(500).send(err);
             }
            // console.log(users)
-            res.render('systemUser',{data,message,users,user_id,user_ });
-        })
-    });
-    
-   
-}
-exports.gen=(req,res,next)=>{
-    var message = req.query.message
-    var user_id = req.query.user_id
-    var user_= req.user
-    req.user.department_id = new Objectid(req.user.department_id)
-    var department
-    if(req.user.role == 'system'){
-        department ={$exists: true}
-    }else{
-        department = req.user.department_id
-    }
-    //console.log(user_id)
-    User.aggregate([
-        {
-            $match: { department_id: department }
-        },
-        {
-            "$lookup": {
-                "from": "departments",
-                "localField": "department_id",
-                "foreignField": "_id",
-                "as": "department"
-            },
-        },
-        { $sort: {  updated: -1 } }
-    ]).exec((err,users)=>{
-        if(err){return res.status(500).send(err);}
-        //console.log(users)
-        Department.find({status : "1"}).sort({ updated: -1 }).exec((err,data)=>{
-            if(err){
-                return res.status(500).send(err);
-            }
-           // console.log(users)
-            res.render('gen',{data,message,users,user_id,user_ });
+            res.render('systemUser',{data,message,users,user_id});
         })
     });
     
@@ -296,12 +75,11 @@ exports.gen=(req,res,next)=>{
 exports.systemEditUser= async(req,res,next)=>{
     //console.log(req.query)
     var message = req.query.message;
-    var user_= req.user
     var department = await  Department.find({status : "1"}).sort({ updated: -1 });
     //console.log(department)
     User.findById({_id:req.query.id},(err,data)=>{
         if(err){return res.status(500).send(err)};
-        return res.render('systemUserEdit',{infoEdit:data,department:department,message ,user_});
+        return res.render('systemUserEdit',{infoEdit:data,department:department,message});
     })   
 }
 exports.systemThemeLocal = (req,res,next)=>{

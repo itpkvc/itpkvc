@@ -39,13 +39,13 @@ exports.isLoggedAll = async(req, res, next) => {
         var role = data[0].role
         //console.log(role)
         if(role == 'system'){
-          res.redirect('/news_')
+          res.redirect('/systemIndex')
         }
         if(role == 'admin'){
-          res.redirect('/news_')
+          res.redirect('/adminIndex')
         }
         if(role == 'user'){
-          res.redirect('/news_')
+          res.redirect('/userIndex')
         }
         next()
       })

@@ -1,0 +1,78 @@
+  var div = document.getElementById('findAll');
+    $.get( "/findTheme", function( data ) {
+        //console.log(data)
+        $.each(data, function(key, value) {
+            var obj = {theme_id : value._id}
+            $.ajax({
+                url: 'findThemeImage',
+                type: 'POST',
+                contentType: 'application/json',
+                data: JSON.stringify(obj),
+                success: function(resultImage){  
+                    //console.log(resultImage);
+                    //console.log(value);
+                    var date = moment(value.updated).local().format('วันที่ DD-MM-YYYY เวลา HH:mm:ss');
+                    var nickname = value.user.nickname;
+                    if(nickname == ''){
+                        nickname = 'ไม่ระบุ'
+                    }
+                    if(resultImage.length == 0){
+                        div.innerHTML += `
+                        <div class="row  pl-5 mb-3  allTheme">
+                        
+                            <div class="col-lg-12 col-md-12 col-sm-12 ">
+                                <div >
+                                    <h4 class="font-weight-bold mt-2 showSubject">${value.subject}</h4>
+                                    <small class="font-weight-bold"><img src="/upload/${value.user.image}" class="rounded-circle" style="width: 40px; height: 40px; object-fit: cover;">
+                                    ${value.user.firstname + ' ' + value.user.lastname +
+                                    ' ('+nickname +') '+ ' ' + 'เเผนก' + ' ' +  value.department.name + ' ' + date}</small>
+                                    <p class="hiddenText">
+                                        ${value.material}
+                                    </p>
+                                </div>
+                                <div class="d-flex justify-content-end align-self-end">
+                                        <div class="d-inline btn btn-primary mr-2 mb-2 " onClick="goChat('${value._id}')">เข้าร่วมกระทู้</div>
+                                        <div class="d-inline btn btn-danger mr-2 mb-2" onClick="deleteTheme('${value._id}')">ลบกระทู้นี้</div>
+                                </div>
+                            </div>
+                        </div>
+                        `
+                    }else{                           
+                        div.innerHTML +=`
+                        <div class="row mt-3 allTheme">
+                            <div class="col-lg-3 col-md-5 bgImage">
+                                <img id="showThemeImage${key}" onclick="largeImage('${resultImage[0].name}')" class="showThemeImage" src="/upload/${resultImage[0].name}" alt="">
+                            </div>
+                            <div class="col-lg-9 col-md-7 mt-2">
+                                <div >
+                                    <h4 class="font-weight-bold showSubject">${value.subject}</h4>
+                                    <small class="font-weight-bold">โดย ${value.user.firstname + ' ' + value.user.lastname +
+                                    ' ('+nickname +') '+ ' ' + 'เเผนก' + ' ' +  value.department.name + ' ' + date}</small>
+                                    <p class="hiddenText">
+                                        ${value.material}
+                                    </p>
+                                </div>
+                                <div class="d-flex justify-content-end align-self-end">
+                                        <div class="d-inline btn btn-primary mr-2 mb-2" onClick="goChat('${value._id}')">เข้าร่วมกระทู้</div>
+                                        <div class="d-inline btn btn-danger mr-2 mb-2" onClick="deleteTheme('${value._id}')">ลบกระทู้นี้</div>
+                                </div>
+                            </div>
+                            
+                        </div>
+                        
+                        `
+                        $.each( resultImage, function( loop, miniImage ) {
+                            var findMiniImage = document.getElementById('findMiniImage');
+                            div.innerHTML +=`
+                                <div class="d-inline-block ml-2 mt-1 mb-1 mbImage " onclick="changeImage('${miniImage.name}','${key}')">
+                                    <img class="miniImage" src="/upload/${miniImage.name}" alt="">
+                                </div>  
+                            `
+                            
+                        });
+
+                    }
+                }
+            });
+        });
+    });

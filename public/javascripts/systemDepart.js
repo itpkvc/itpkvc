@@ -8,13 +8,13 @@ if(err == 'noName'){
     })
 }
 if(err == 'duplicate'){
-        Swal.fire({
-        title: 'เกิดข้อพิดพลาด?',
-        text: "มีชื่อแผนกนี้แล้ว!",
-        icon: 'warning',
-        confirmButtonColor: '#dc143c',
-        confirmButtonText: 'ตกลง'
-        })
+    Swal.fire({
+    title: 'เกิดข้อพิดพลาด?',
+    text: "มีชื่อแผนกนี้แล้ว!",
+    icon: 'warning',
+    confirmButtonColor: '#dc143c',
+    confirmButtonText: 'ตกลง'
+    })
 }
 if(err == 'deleteSuccess'){
     Swal.fire({

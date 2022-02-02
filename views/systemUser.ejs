@@ -4,8 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>วิทยาลัยอาชีวศึกษาภูเก็ต</title>
-    <link rel="icon" href="/images/loginLogo.png">
+    <title>Document</title>
     <link rel="stylesheet" href="/stylesheets/systemUser.css">
 </head>
 <body class="hold-transition sidebar-mini layout-fixed" data-panel-auto-height-mode="height">
@@ -38,11 +37,11 @@
 
                 <div class="col-xl-8 col-lg-8 col-md-8 col-sm-12 text-right">
                   <div class="form-group d-inline-flex">
-                    <a  class="btn btn-primary ml-1" onclick="userall()">ผู้ใช้งานทั้งหมด</a>
-                    <a  class="btn btn-primary ml-1" onclick="teacher()">อาจารย์</a>
-                    <a  class="btn btn-primary ml-1" onclick="student()">นักศึกษา</a>
-                    <a  class="btn btn-primary ml-1" onclick="system()">ผู้ดูแล</a>
-                    <a  class="btn btn-primary ml-1" onclick="admin()">ผู้ดูแลแผนก</a>
+                    <a  class="btn btn-primary ml-1" >ผู้ใช้งานทั้งหมด</a>
+                    <a  class="btn btn-primary ml-1" >อาจารย์</a>
+                    <a  class="btn btn-primary ml-1" >นักศึกษา</a>
+                    <a  class="btn btn-primary ml-1" >ผู้ดูแล</a>
+                    <a  class="btn btn-primary ml-1" >ผู้ดูแลแผนก</a>
                   </div>
                 </div>
                 
@@ -51,12 +50,16 @@
                 <div class="col-12 col-lg-6 col-md-6 col-sm-12">
                   <div class="form-group d-inline-flex  mr-2">
                   
-                  
+                    <a  class="btn btn-success" style="width: 175px;">
+                      <span><i class="fa fa-table" aria-hidden="true"></i></span> มุมมองตาราง
+                    </a>
+                    <a  class="btn btn-secondary ml-1"style="width: 175px;"  >
+                      <span><i class="fa fa-address-card" aria-hidden="true"></i></span> ดูข้อมูลทั้งหมด
+                    </a>
                   </div>
                 </div>
                 <div class="col-12 col-lg-6 col-md-6 col-sm-12 text-right">
                   <div class="form-group d-inline-flex ml-auto mr-1">
-                
                     <input type="text"id="myInput" class="form-control withcss" placeholder="Type to search">
                     <a  class="btn btn-success">ค้นหา</a>
                     <a  class="btn btn-secondary ml-1" >รีเซ็ต</a>
@@ -65,60 +68,38 @@
                
               </div>
               <div class="row">
-                <table  class="table table-striped" >
+                <table id="myTable" class="table table-striped" >
                   <thead>
                     <tr >
                       <th class="text-center">รูป</th>
                       <th>ชื่อ-นามสกุล</th>
                       <th class="none-id">เลขบัตรประชาชน</th>
                       <th class="none-std">รหัสนักศึกษา</th>
-                      <th class="none-genyear" >แผนก</th>
-                      <th class="none-genyear" >สถานะ</th>
-                      <th class="none-department" >สิทธิในการใช้งาน</th>
+                      <th class="none-genyear">เพศ</th>
+                      <th class="none-genyear">รุ่น/ปี</th>
+                      <th class="none-department">แผนก</th>
                       <th class="td_btnt-1 text-center" >ดูเพิ่มเติม</th>
                       <th class="td_btnt">เเก้ไข</th>
                       <th class="td_btnt">ลบ</th>
                     </tr>
                   </thead>
-                  <tbody id="myTable">
+                  <tbody>
                     <% users.forEach((user)=>{ %> 
                       <tr>
                         <td class="text-center"><img src="/upload/<%= user.image%>"class="show_image" alt=""></td>
                         <td><%= user.firstname + '   ' + user.lastname  %> </td>
                         <td class="none-id"><%= user.idcard %> </td>
                         <td class="none-std"><%= user.idstudent %></td>
-                      
-                      
+                        <td class="none-genyear"><%= user.gender  %></td>
+                        <td class="none-genyear"><%= user.generation +'/' +user.year  %></td>
                         <td class="none-department"><%= user.department[0].name%></td>
-                        <% if(user.duty == "teacher"){  %> 
-                          <td class="none-genyear" ">อาจารย์</td>
-                          <% } %> 
-                          <% if(user.duty == "student"){  %> 
-                          <td class="none-genyear" >นักศึกษา</td>
-                          <% } %> 
-                        
-                        <% if(user.role == "system"){  %> 
-                        <td class="none-genyear" ">ผู้ดูแลระบบ</td>
-                        <% } %> 
-                        <% if(user.role == "admin"){  %> 
-                        <td class="none-genyear" >ผู้ดูแลแผนก</td>
-                        <% } %> 
-                        <% if(user.role == "user"){  %> 
-                        <td class="none-genyear" >ผู้ใช้งาน</td>
-                        <% } %> 
                         <!-- ปิดไวั -->
                         <td class="d-none"><%= user.duty  %> </td>
                         <td class="d-none"><%= user.role  %> </td>
                         <!--  -->
                         <td class="text-center"><a  class="btn btn-success btnt" onclick="infoUser('<%= user._id%>')" ><i class="fa fa-id-card" aria-hidden="true"></i></a></td>
-                        <% if(user_.role == 'system' ){%> 
                         <td><a  class="btn btn-primary  btnt"  onclick="editUser('<%= user._id%>')"  ><i class="fas fa-user-edit"></i></a></td>
                         <td><a  class="btn btn-danger  btnt" id="deleteUser" onclick="deleteUser('<%= user._id%>')" ><i class="far fa-trash-alt"></i></a></td>
-                        <% } %> 
-                        <% if(user_.role == 'admin' && user.role !== 'system'  && user.role !== 'admin'){%> 
-                          <td><a  class="btn btn-primary  btnt"  onclick="editUser('<%= user._id%>')"  ><i class="fas fa-user-edit"></i></a></td>
-                          <td><a  class="btn btn-danger  btnt" id="deleteUser" onclick="deleteUser('<%= user._id%>')" ><i class="far fa-trash-alt"></i></a></td>
-                          <% } %> 
                       </tr>
                     <% }) %> 
                   </tbody>
@@ -177,29 +158,12 @@
                                         </div>
                                         <div class="col-12 col-sm-12 col-md-6">
                                           <label>แผนก</label>
-                                        
-                                          <% if(user_.role == 'system'){%> 
-                                            <select class="form-control text-dark" id="department_id" name="department_id">
-                                                <option value="" selected>--กรุณาเลือกแผนก--</option>
-                                                <% data.forEach(function(depart){ %>
-                                                  <option value="<%= depart._id%>" ><%=  depart.name  %> </option>   
-                                                  <% }); %>
-                                               
-                                            </select>
-                                            <% } %> 
-                                 
-                                            <% if(user_.role == 'admin'){%> 
-                                         
-                                              <select class="form-control text-dark" id="department_id" name="department_id">
-                                            
-                                                  <% data.forEach(function(depart){ %>
-                                                    <% if(depart._id == user_.department_id.toString()){ %> 
-                                                    <option value="<%= depart._id%>" selected><%= depart.name  %> </option>  
-                                                    <% } %>  
-                                                  <% }); %>
-                                                 
-                                              </select>
-                                            <% } %> 
+                                          <select class="form-control" type="text"  id="department_id" name="department_id">
+                                            <option value="" selected>--กรุณาเเผนก--</option>
+                                            <% data.forEach((department)=>{ %> 
+                                              <option  value="<%= department.id %>"><%= department.name %>  </option>
+                                            <% }) %>
+                                          </select>
                                         </div>
                                         <div class="col-12 col-sm-6 col-md-3">
                                           <label for="">รุ่น</label>
@@ -227,43 +191,19 @@
                                         </div>
                                         <div class="col-12 col-sm-12 col-md-6 mt-2">
                                           <label for="">บทบาทหรือหน้าที่</label>
-                                          <% if(user_.role == 'admin'){%> 
-                                            <select class="form-control" type="text"  id="duty" name="duty">
-                                              <option value="student" selected>นักศึกษา</option>
-                                             
-                                            </select>
-                                        
-                                        
-                                          <% } %> 
-                                          <% if(user_.role == 'system'){%> 
-                                            <select class="form-control" type="text"  id="duty" name="duty">
-                                              <option value="student" selected>นักศึกษา</option>
-                                              <option value="teacher">อาจารย์</option>
-                                            </select>
-                                        
-                                          <% } %> 
-                                        
+                                          <select class="form-control" type="text"  id="duty" name="duty">
+                                            <option value="student" selected>นักศึกษา</option>
+                                            <option value="teacher">อาจารย์</option>
+                                          </select>
                                         </div>
                                         <div class="col-12 col-sm-12 col-md-6 my-2">
                                           <label>สิทธิในการใช้งาน</label>
-                                          <% if(user_.role == 'admin'){%> 
-                                            <select class="form-control" type="text"  id="role" name="role">
-                                            
-                                              <option value="user" selected>ผู้ใช้งาน</option>
-                                              
-                                            </select>
-                                        
-                                          <% } %> 
-                                          <% if(user_.role == 'system'){%> 
-                                            <select class="form-control" type="text"  id="role" name="role">
-                                              <option value="" disabled selected>--กรุณาเลือกสิทธิ--</option>
-                                              <option value="user" selected>ผู้ใช้งาน</option>
-                                              <option value="admin">ผู้ดูแลเเผนก</option>
-                                              <option value="system">ผู้ดูแลระบบ</option>
-                                            </select>
-                                        
-                                            <% } %> 
-                                        
+                                          <select class="form-control" type="text"  id="role" name="role">
+                                            <option value="" disabled selected>--กรุณาเลือกสิทธิ--</option>
+                                            <option value="user" selected>ผู้ใช้งาน</option>
+                                            <option value="admin">ผู้ดูแลเเผนก</option>
+                                            <option value="system">ผู้ดูแลระบบ</option>
+                                          </select>
                                         </div>
                                         <div class="col-12 col-sm-12 col-md-6">
                                           <label for="">อื่นๆ</label>
@@ -455,40 +395,7 @@
           var err = '<%= message %>'
           var user_id = '<%= user_id %>'
           var uri = window.location.toString();   
-
-          function teacher(){
-            var value = 'teacher'
-            $("#myTable tr").filter(function() {
-              $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
-            });
-          }
-          function student(){
-            var value = 'student'
-            $("#myTable tr").filter(function() {
-              $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
-            });
-          }
-          function admin(){
-            var value = 'admin'
-            $("#myTable tr").filter(function() {
-              $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
-            });
-          }
-          function system(){
-            var value = 'system'
-            $("#myTable tr").filter(function() {
-              $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
-            });
-          }
-          function userall(){
-            var value = ''
-            $("#myTable tr").filter(function() {
-              $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
-            });
-          }
-       
       </script>
-      
       <script type="text/javascript" src="/javascripts/systemUser.js"></script>
 </body>
 </html>

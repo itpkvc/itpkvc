@@ -88,7 +88,6 @@ $( document ).ready(function() {
                             <div class="col-lg-12 col-md-12 col-sm-12 ">
                             <div >
                                 <h4 class="font-weight-bold mt-2 showSubject">${value.subject}</h4>
-                                <img src="/upload/${value.user.image}" class="rounded-circle" style="width: 40px; height: 40px; object-fit: cover;">
                                 <small class="font-weight-bold">โดย ${value.user.firstname + ' ' + value.user.lastname +
                             ' ('+nickname +') '+ ' ' + 'เเผนก' + ' ' +  value.department.name + ' ' + date}</small>
                                 <p class="hiddenText">
@@ -112,7 +111,6 @@ $( document ).ready(function() {
                             <div class="col-lg-9 col-md-7 mt-2">
                                 <div>
                                     <h4 class="font-weight-bold showSubject ">${value.subject}</h4>
-                                    <img src="/upload/${value.user.image}" class="rounded-circle" style="width: 40px; height: 40px; object-fit: cover;">
                                     <small class="font-weight-bold">โดย ${value.user.firstname + ' ' + value.user.lastname +
                             ' ('+nickname +') '+ ' ' + 'เเผนก' + ' ' +  value.department.name + ' ' + date}</small>
                                     <p class="hiddenText">

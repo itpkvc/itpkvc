@@ -10,12 +10,12 @@ var app = express();
 //Use env
 require('dotenv').config();
 //Use DB
-const connectDB = require('./config/dbConnect')
-connectDB();
-
+require('./config/dbConnect')
 // Passport
 const passport = require('passport')
 require('./config/passport')
+
+
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
@@ -35,8 +35,8 @@ app.use(
   })  
 )
 app.use(bodyParser.urlencoded({ extended: false }));
-app.use(passport.initialize())
-app.use(passport.session())
+  app.use(passport.initialize())
+  app.use(passport.session())
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);

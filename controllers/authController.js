@@ -1,4 +1,4 @@
-const bcrypt = require('bcryptjs'); // hash password
+const bcrypt = require('bcrypt'); // hash password
 const nodemailer = require('nodemailer'); //sent email
 const User = require('../models/userModel'); //Model DB
 const token = require('token') //token 
@@ -8,11 +8,11 @@ const { request } = require('express');
 
 exports.passport = ( req , res ) => {
     if(req.user.role == 'system'){
-        res.redirect('/news_')  
+        res.redirect('/systemIndex')  
     }else if(req.user.role == 'admin'){
-         res.redirect('/news_')  
+         res.redirect('/adminIndex')  
     }else if(req.user.role == 'user'){
-        res.redirect('/news_')  
+        res.redirect('/userIndex')  
     }else{
         res.redirect('/') 
     }      
@@ -81,9 +81,9 @@ exports.forgot = async( req , res ) => {
          }).then(data =>{
                 console.log('Message sent: %s', data.messageId); 
                 var message = 'success'
-                //return res.redirect('/forgot?err='+message )
+                return res.redirect('/forgot?err='+message )
          });
-         return res.redirect('/forgot?err='+message )
+         
              
 }
 exports.reset_password = async( req ,res) =>{

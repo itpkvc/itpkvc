@@ -6,7 +6,6 @@ var Objectid = require('mongodb').ObjectID;
 exports.insertTheme = (req,res,next)=>{
     obj = {
         user_id : req.user._id,
-        department_id : req.user.department_id,
         subject : req.body.subject,
         material : req.body.material
     }
@@ -42,18 +41,7 @@ exports.deleteThemeImage =(req,res,next)=>{
     })
 }
 exports.findTheme = (req,res,next) =>{
-    req.user.department_id = new Objectid(req.user.department_id)
-    var department
-    if(req.user.role == 'system'){
-        department ={$exists: true}
-    }else{
-        department = req.user.department_id
-    }
-    
     Theme.aggregate([
-        {
-            $match: { department_id: department }
-        },
         {
             "$lookup": {
                 "from": "users",

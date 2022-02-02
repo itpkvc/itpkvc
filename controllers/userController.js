@@ -3,7 +3,7 @@ const User = require('../models/userModel');
 const fs = require('fs');
 const token = require('token') //token 
 const crypto = require('crypto');
-const bcrypt = require('bcryptjs'); // hash password
+const bcrypt = require('bcrypt'); // hash password
 var Objectid = require('mongodb').ObjectID;
 
 //-------------------------------Department------------------------------------------------
@@ -67,7 +67,7 @@ exports.insertUser = async(req,res,next) =>{
         ,line,duty,nickname  
   
     } = req.body;
-    //console.log(req.body)
+    console.log(req.body)
     const check_idcard = await User.findOne({idcard})
     if(check_idcard !== null){
         return res.redirect('/systemUser?message=D_idcard');
@@ -183,20 +183,10 @@ exports.editImage = (req,res,next)=>{
     })
     
 }
-exports.editInfo = async(req,res,next)=>{
-  //console.log(req.body)  
-  //console.log(req.query)
-  var user = await User.findOne({_id:req.query.id});
-  console.log(user)
-  if(user.image == "female.jpg" || user.image == "man.jpg" ){
-    if(req.body.gender == "หญิง"){
-        await User.findByIdAndUpdate({_id:req.query.id},{image : "female.jpg"})
-      }
-      if(req.body.gender == "ชาย"){
-        await User.findByIdAndUpdate({_id:req.query.id},{image : "man.jpg"})
-      }
-  }
-  await User.findByIdAndUpdate({_id:req.query.id},req.body,(err,data)=>{
+exports.editInfo = (req,res,next)=>{
+  console.log(req.body)  
+  console.log(req.query)
+  User.findByIdAndUpdate({_id:req.query.id},req.body,(err,data)=>{
       if(err){return res.status(500).send(err);}
       return res.redirect(`/systemEditUserPage?id=${req.query.id}&message=Update`);
   })

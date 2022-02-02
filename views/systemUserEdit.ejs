@@ -4,8 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>วิทยาลัยอาชีวศึกษาภูเก็ต</title>
-    <link rel="icon" href="/images/loginLogo.png">
+    <title>Document</title>
     <link rel="stylesheet" href="/stylesheets/systemUser.css">
 </head>
 <body class="hold-transition sidebar-mini layout-fixed" data-panel-auto-height-mode="height">
@@ -114,28 +113,12 @@
                                     </div>
                                     <div class=" col-sm-12 col-md-6 col-lg-3">
                                       <label>แผนก  </label>
-                                      <% if(user_.role == 'system'){%> 
-                                        <select class="form-control text-dark" id="department_id" name="department_id">
-                                            <option value="" selected>--กรุณาเลือกแผนก--</option>
-                                            <% department.forEach(function(depart){ %>
-                                              <option value="<%= depart._id%>" ><%=  depart.name  %> </option>   
-                                              <% }); %>
-                                           
+                                      <select class="form-control" type="text"  id="department_id" name="department_id">
+                                          <option value="" >--กรุณาเเผนก--</option> 
+                                          <% department.forEach((department)=>{ %> 
+                                            <option  value="<%= department._id %>"><%= department.name %>  </option>
+                                          <% }) %> 
                                         </select>
-                                        <% } %> 
-                             
-                                        <% if(user_.role == 'admin'){%> 
-                                     
-                                          <select class="form-control text-dark" id="department_id" name="department_id">
-                                        
-                                              <% department.forEach(function(depart){ %>
-                                                <% if(depart._id == user_.department_id.toString()){ %> 
-                                                <option value="<%= depart._id%>" selected><%= depart.name  %> </option>  
-                                                <% } %>  
-                                              <% }); %>
-                                             
-                                          </select>
-                                        <% } %> 
                                     </div>
                                     <div class=" col-sm-12 col-md-6 col-lg-3">
                                       <label for="">รุ่น</label>
@@ -159,54 +142,19 @@
                                     </div>
                                     <div class=" col-sm-12 col-md-6 col-lg-3">
                                       <label for="">บทบาทหรือหน้าที่</label>
-                                      <% if(user_.role == 'admin'){%> 
-                                        <select class="form-control" type="text"  id="duty" name="duty">
-                                          <option value="student" selected>นักศึกษา</option>
-                                         
-                                        </select>
-                                    
-                                    
-                                      <% } %> 
-                                      <% if(user_.role == 'system'){%> 
-                                        <select class="form-control" type="text"  id="duty" name="duty">
-                                          <option value="student" selected>นักศึกษา</option>
-                                          <option value="teacher">อาจารย์</option>
-                                        </select>
-                                    
-                                      <% } %> 
+                                      <select class="form-control" type="text" id="duty" name="duty"   >
+                                        <option value="student" selected>นักศึกษา</option>
+                                        <option value="teacher">อาจารย์</option>
+                                      </select>
                                     </div>
                                     <div class=" col-sm-12 col-md-6 col-lg-3">
                                       <label>สิทธิในการใช้งาน</label>
-                                      <% if(user_.role == 'admin'){%> 
-                                        <% if(user_._id.toString() !==  infoEdit._id.toString()){ %> 
-                                        <select class="form-control" type="text"  id="role" name="role">
-                                        
-                                          <option value="user" selected>ผู้ใช้งาน</option>
-                                          
-                                        </select>
-                                        <% } %> 
-                                      <% } %> 
-                                      <% if(user_.role == 'system'){%> 
-                                        <select class="form-control" type="text"  id="role" name="role">
-                                          <option value="" disabled selected>--กรุณาเลือกสิทธิ--</option>
-                                          <option value="user" selected>ผู้ใช้งาน</option>
-                                          <option value="admin">ผู้ดูแลเเผนก</option>
-                                          <option value="system">ผู้ดูแลระบบ</option>
-                                        </select>
-                                    
-                                        <% } %> 
-                                        <% if(user_.role == 'admin'){%> 
-                                          <% if( user_._id ==  infoEdit._id){%> 
-                                            <select class="form-control" type="text"  id="role" name="role">
-                                            
-                                           
-                                              <option value="admin" selected>ผู้ดูแลเเผนก</option>
-                                           
-                                            </select>
-                                        
-                                            <% } %> 
-                                        <% } %> 
-                                      
+                                      <select class="form-control" type="text" id="role"  name="role">
+                                        <option value="" disabled selected>--กรุณาเลือกสิทธิ--</option>
+                                        <option value="user" selected>ผู้ใช้งาน</option>
+                                        <option value="admin">ผู้ดูแลเเผนก</option>
+                                        <option value="system">ผู้ดูแลระบบ</option>
+                                      </select>
                                     </div>
                                     <div class="col-sm-12 col-md-6 col-lg-3">
                                       <label for="">อื่นๆ</label>

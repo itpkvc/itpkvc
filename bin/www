@@ -60,7 +60,7 @@ io.on('connection', (socket) => {
           {
               $unwind : '$theme'
           },
-          { $sort: {  updated: -1 } }
+          { $sort: {  updated: 1 } }
       ]).exec((err,res)=>{
         if(err){
           throw err;

@@ -35,14 +35,7 @@ const upload = multer({
     fileFilter: fileFilter,
   });
 
-/* GET and Post home page. */
-router.use(function(req,res,next){
-  res.setHeader('Access-Control-Allow-Origin', '*');
-  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE'); // If needed
-  res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type'); // If needed
-  res.setHeader('Access-Control-Allow-Credentials', true); // If needed
-  next();
-});
+g
 router.get('/',authMiddleware.isLoggedAll, pageController.index)
 router.get('/forgot',authMiddleware.isLoggedAll,pageController.forgot)
 router.get('/reset',authMiddleware.isLoggedAll,pageController.reset)

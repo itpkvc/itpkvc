@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>วิทยาลัยอาชีวศึกษาภูเก็ต</title>
+    <link rel="icon" href="/images/loginLogo.png">
+    <link rel="stylesheet" href="/stylesheets/webBoard.css">
+</head>
+<body class="hold-transition sidebar-mini layout-fixed ml-4 mr-4" data-panel-auto-height-mode="height">
+    <div class="wrapper">
+        <!-- Navbar -->
+        <%- include('privateTop'); -%>
+        <!-- /.navbar -->
+
+        <!-- Main Sidebar Container -->
+        <%- include('systemLeft'); -%>
+
+        <!-- Content Wrapper. Contains page content -->
+        <div class="content-wrapper iframe-mode" data-widget="iframe" data-loading-screen="750">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-6 col-md-6 col-sm-12">
+                        <div class="container"  id="findAll">  
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-md-6 col-sm-12">
+                        <div class="container containChat mt-3">
+                            <div class="card">
+                              <div class="card-body">
+                                <div class="input-group d-none">
+                                  <input type="text" class="form-control " id="username"value="<%= user.firstname + ' ' + user.lastname  %> " 
+                                    placeholder="Change your username"/>
+                                </div>
+                                <div class="input-group  d-none">
+                                    <input type="text"class="form-control"id="user_id"value="<%= user._id %>" />
+                                </div>
+                                <div class="input-group d-none">
+                                    <input type="text"class="form-control " id="theme_id"value="<%= theme_id %>" />
+                                </div>
+                              </div>
+                              <div id="message-box" class="message-box">
+                                 
+                                <ul class="list-group list-group-flush" id="message-list">
+                                </ul> 
+                                <ul id="toBottom">
+                                    
+                                </ul>
+                              </div>
+                              <div class="info ml-5  " id="info">
+                            </div>
+                              <div class="card-footer">
+                                <div class="input-group">
+                                  <input type="text"class="form-control" id="message"placeholder="Send new message"/>
+                                  <div class="input-group-append">
+                                    <button class="btn btn-success" type="button" id="messageBtn">
+                                      Send
+                                    </button>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        
+                    </div>
+                </div> 
+            </div>
+          
+           
+           
+            <!-- modal -->
+            <div class="modal fade  bd-example-modal-lg" id="ShowLargeImage" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-lg">
+                  <div class="modal-content">
+                        <img id="largeImage" src="/upload/man.jpg" >
+                  </div>
+                </div>
+            </div>
+
+            <div class="modal fade  bd-example-modal-lg" id="readMoreModal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content p-4">
+                        <p id="readMore"></p>
+                        <div>
+                            <a class="btn btn-secondary float-right" data-dismiss="modal">ปิดหน้าต่าง</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+       
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+        var uri = window.location.toString();
+        var theme_id1 = '<%= theme_id%>'
+    </script>  
+    <script type="text/javascript" src="/javascripts/chat.js"></script>  
+    
+    
+</body>
+</html>

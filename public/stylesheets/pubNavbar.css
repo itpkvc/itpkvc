@@ -1,0 +1,46 @@
+.btc-pkvc{
+    background-color: #80151a;
+    color: white;
+    font-weight: bold;  
+}
+.btc-red{
+    background-color: red;
+    color: white;
+    font-weight: bold;
+}
+.btc-outline-pkvc{
+    background-color: white;
+    color: #800000;
+    border: 2px solid #800000;
+    font-weight: bold; 
+}
+.btc-outline-pkvc:hover{
+    background-color: #800000;
+    color: white;
+}
+
+.btc-pkvc:hover,.btc-red:hover{
+    box-shadow: 3px 5px 10px 5px #dfdfdf;
+}
+/* .divShadow{
+   background-image: url('/assets/images/test.jpg');
+   background-size: cover;
+} */
+.imgLogo{
+    height: 100px;
+    width: 100px;
+    object-fit: cover;
+}
+.imgMenu{
+    height: 50px;
+    width: 50px;
+    object-fit: cover;
+}
+.forgot{
+    cursor: pointer;
+    font-weight: bold;
+    color: black;
+}
+.navbar{
+    border-bottom: 1px solid rgb(216, 216, 216);
+}

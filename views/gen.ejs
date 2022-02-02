@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>วิทยาลัยอาชีวศึกษาภูเก็ต</title>
+    <link rel="icon" href="/images/loginLogo.png">
+    <link rel="stylesheet" href="/stylesheets/systemUser.css">
+</head>
+<body class="hold-transition sidebar-mini layout-fixed" data-panel-auto-height-mode="height">
+    <div class="wrapper">
+        <!-- Navbar -->
+        <%- include('privateTop'); -%>
+        <!-- /.navbar -->
+
+        <!-- Main Sidebar Container -->
+        <%- include('systemLeft'); -%>
+
+        <!-- Content Wrapper. Contains page content -->
+        <div class="content-wrapper iframe-mode" data-widget="iframe" data-loading-screen="750">
+            <div class="container mt-3 addheader">
+                <div class="row" >
+                    <div class="col-12 text-center ">
+                      <h3 class="font-weight-bold ml-auto ">ทำเนียบรุ่น</h3>
+                    </div>
+                </div> 
+            </div>
+            <!-- Button trigger modal -->
+            <!-- table -->
+            <div class="container-fluid   mt-3">
+              <div class="row">
+              
+
+                
+                
+              </div>
+              <div class="row">
+                <div class="col-12 col-lg-6 col-md-6 col-sm-12">
+                  <div class="form-group d-inline-flex  mr-2">
+                  
+                  
+                  </div>
+                </div>
+                <div class="col-12 col-lg-6 col-md-6 col-sm-12 text-right">
+                  <div class="form-group d-inline-flex ml-auto mr-1">
+                
+                    <input type="text"id="myInput" class="form-control withcss" placeholder="Type to search">
+                    <a  class="btn btn-success">ค้นหา</a>
+                    <a  class="btn btn-secondary ml-1" >รีเซ็ต</a>
+                  </div>
+                </div>
+               
+              </div>
+              <div class="row">
+                <table  class="table table-striped" >
+                  <thead>
+                    <tr >
+                      <th class="text-center">รูป</th>
+                      <th>ชื่อ-นามสกุล</th>
+            
+                
+                      <th class="none-genyear" >แผนก</th>
+                      <th class="none-genyear" >รุ่น/ปี</th>
+                      <th class="none-department" >สิทธิในการใช้งาน</th>
+                      <th class="td_btnt-1 text-center" >ดูเพิ่มเติม</th>
+                   
+                    </tr>
+                  </thead>
+                  <tbody id="myTable">
+                    <% users.forEach((user)=>{ %> 
+                      <tr>
+                        <td class="text-center"><img src="/upload/<%= user.image%>"class="show_image" alt=""></td>
+                        <td><%= user.firstname + '   ' + user.lastname  %> </td>
+                  
+                     
+                      
+                      
+                        <td class="none-department"><%= user.department[0].name%></td>
+                        <td class="none-genyear" "><%= user.generation + '/' + user.year  %></td>
+                        <% if(user.role == "system"){  %> 
+                        <td class="none-genyear" ">ผู้ดูแลระบบ</td>
+                        <% } %> 
+                        <% if(user.role == "admin"){  %> 
+                        <td class="none-genyear" >ผู้ดูแลแผนก</td>
+                        <% } %> 
+                        <% if(user.role == "user"){  %> 
+                        <td class="none-genyear" >ผู้ใช้งาน</td>
+                        <% } %> 
+                        <!-- ปิดไวั -->
+                        <td class="d-none"><%= user.duty  %> </td>
+                        <td class="d-none"><%= user.role  %> </td>
+                        <!--  -->
+                        <td class="text-center"><a  class="btn btn-success btnt" onclick="infoUser('<%= user._id%>')" ><i class="fa fa-id-card" aria-hidden="true"></i></a></td>
+                  
+                      </tr>
+                    <% }) %> 
+                  </tbody>
+                </table>
+              </div>  
+            </div>
+            <!-- //table -->   
+       
+
+               
+        
+
+            <!-- modal show user -->
+            <div class="modal fade bd-example-modal-lg"  id="editusermodal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-lg">
+                      <div class="modal-content">
+                        <div class="modal-body">
+                            <div class="container-fluid">
+                              <form action="/systemEditUser" method="POST">
+                                    <div class="row">
+                                        <div class="col-12 text-center">
+                                        <h3>เพิ่มข้อมูลผู้ใช้งาน</h3>
+                                        </div>
+                                        <div class="col-lg-5">
+                                              <div class="text-center mt-3">
+                                                  <img id="infoblah"  alt="your image" >
+                                                </div>
+                                        </div>
+                                        <div class="col-lg-7">
+                                          <div class="row">
+                                       
+                                              <div class="col-6 col-sm-12 col-md-6">
+                                                <label for="">ชื่อ</label>
+                                                <div class="input-group mb-3">
+                                                    <input type="text" class="form-control"id="infofirstname" name="infofirstname"  placeholder="กรอกชื่อ" disabled >
+                                                </div>
+                                              </div>
+                                              <div class="col-6 col-sm-12 col-md-6">
+                                                <label for="">นามสกุล</label>
+                                                <div class="input-group mb-3">
+                                                    <input type="text" class="form-control"id="infolastname"  name="infolastname"  placeholder="กรอกชื่อ" disabled >
+                                                </div>
+                                              </div>
+                                              <div class="col-12 col-sm-12 col-md-12">
+                                                <label for="">อีเมล์</label>
+                                                <div class="input-group mb-3">
+                                                    <input type="email" class="form-control" id="infoemail"  name="infoemail" placeholder="example@gmail.com"  disabled>
+                                                </div>
+                                              </div>
+                                          </div>
+                                        </div>
+                                    </div>
+                                    <div class="row  p-2" >
+                                      <div class=" col-sm-12 col-md-6  col-lg-3" >
+                                        <label for="">ชื่อเล่น</label>
+                                        <input type="text" class="form-control "  id="infonickname" name="infonickname" disabled>
+                                     </div>
+                                      <div class=" col-sm-12 col-md-6  col-lg-3" >
+                                          <label for="">วันเดือนปีเกิด</label>
+                                          <input type="date" class="form-control "  id="infobirthday" name="infobirthday" disabled>
+                                      </div>
+                                      <div class=" col-sm-12 col-md-6 col-lg-3">
+                                          <label for="">เพศ</label>
+                                          <select class="form-control"  type="text"id="infogender"  name="infogender" disabled >
+                                          <option value=""  selected>--กรุณาเลือกเพศ--</option>
+                                          <option value="ชาย" >ชาย</option>
+                                          <option value="หญิง">หญิง</option>
+                                          </select>
+                                      </div>
+                                      <div class=" col-sm-12 col-md-6 col-lg-3">
+                                          <label>แผนก</label>
+                                          <select class="form-control" type="text" id="infodepartment_id" name="infodepartment_id"disabled>
+                                          <option >--กรุณาเเผนก--</option> 
+                                            <% data.forEach((department)=>{ %> 
+                                              <option  value="<%= department.id %>"><%= department.name %>  </option>
+                                            <% }) %> 
+                                          </select>
+                                      </div>
+                                      <div class=" col-sm-12 col-md-6 col-lg-3">
+                                          <label for="">รุ่น</label>
+                                          <input type="number" class="form-control" id="infogeneration"  name="infogeneration" placeholder="รุ่นที่"disabled>
+                                      </div>
+                                      <div class=" col-sm-12 col-md-6 col-lg-3">
+                                          <label for="">ปีการศึกษา</label>
+                                          <input type="number" class="form-control" id="infoyear"   name="infoyear" placeholder="ปีที่"disabled>
+                                      </div>
+                                      <div class=" col-sm-12 col-md-6 col-lg-3">
+                                          <label for="">Facebook</label>
+                                          <input type="text" class="form-control"  id="infofacebook"  name="infofacebook" placeholder="ชื่อ facebook" disabled>
+                                      </div>
+                                      <div class=" col-sm-12 col-md-6 col-lg-3">
+                                          <label for="">Line ID</label>
+                                          <input type="text" class="form-control" id="infoline"  name="infoline" placeholder="ไอดีไลน์"disabled >
+                                      </div>
+                                      <div class=" col-sm-12 col-md-6 col-lg-3" >
+                                          <label for="">เบอร์โทร</label>
+                                          <input type="number" class="form-control"  id="infophone"  name="infophone" placeholder="เบอร์โทร"disabled>
+                                      </div>
+                                      <div class=" col-sm-12 col-md-6 col-lg-3">
+                                          <label for="">บทบาทหรือหน้าที่</label>
+                                          <select class="form-control" type="text" id="infoduty"   name="infoduty"disabled >
+                                          <option value="student" selected>นักศึกษา</option>
+                                          <option value="teacher">อาจารย์</option>
+                                          </select>
+                                      </div>
+                                      <div class=" col-sm-12 col-md-6 col-lg-3">
+                                          <label>สิทธิในการใช้งาน</label>
+                                          <select class="form-control" type="text" id="inforole"  name="inforole"disabled>
+                                          <option value="user" selected>ผู้ใช้งาน</option>
+                                          <option value="admin">ผู้ดูแลเเผนก</option>
+                                          <option value="system">ผู้ดูแลระบบ</option>
+                                          </select>
+                                      </div>
+                                      <div class=" col-sm-12 col-md-6 col-lg-3">
+                                          <label for="">อื่นๆ</label>
+                                          <input type="text" class="form-control" id="infoother" name="infoother" placeholder="ฯลฯ"disabled>
+                                      </div>  
+                                      <div class=" col-sm-12 col-md-12 mt-3 " >
+                                          <div class="text-center mb-1 btc"  >
+                                            <button type="button" class="btn btn-danger " data-dismiss="modal">ปิดหน้าต่าง</button>
+                                          </div>
+                                      </div>   
+                                    </div>
+                              </form>
+                            </div>
+                        </div>
+                      </div>
+                    </div>
+            </div>
+              <!-- //modal show user -->
+    </div>
+        <!-- /.content-wrapper -->
+
+        <!-- footer -->
+        
+
+        <!-- Control Sidebar -->
+        <!-- <aside class="control-sidebar control-sidebar-dark">
+         
+        </aside> -->
+        <!-- /.control-sidebar -->
+      </div>
+      <script>
+          var err = '<%= message %>'
+          var user_id = '<%= user_id %>'
+          var uri = window.location.toString();   
+
+          function teacher(){
+            var value = 'teacher'
+            $("#myTable tr").filter(function() {
+              $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+            });
+          }
+          function student(){
+            var value = 'student'
+            $("#myTable tr").filter(function() {
+              $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+            });
+          }
+          function admin(){
+            var value = 'admin'
+            $("#myTable tr").filter(function() {
+              $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+            });
+          }
+          function system(){
+            var value = 'system'
+            $("#myTable tr").filter(function() {
+              $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+            });
+          }
+          function userall(){
+            var value = ''
+            $("#myTable tr").filter(function() {
+              $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+            });
+          }
+       
+      </script>
+      
+      <script type="text/javascript" src="/javascripts/systemUser.js"></script>
+</body>
+</html>

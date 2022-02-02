@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>วิทยาลัยอาชีวศึกษาภูเก็ต</title>
+    <link rel="icon" href="/images/loginLogo.png">
+    <link rel="stylesheet" href="/stylesheets/systemUser.css">
+</head>
+<body class="hold-transition sidebar-mini layout-fixed" data-panel-auto-height-mode="height">
+    <div class="wrapper">
+        <!-- Navbar -->
+        <%- include('privateTop'); -%>
+        <!-- /.navbar -->
+
+        <!-- Main Sidebar Container -->
+        <%- include('systemLeft'); -%>
+
+        <!-- Content Wrapper. Contains page content -->
+        <div class="content-wrapper iframe-mode" data-widget="iframe" data-loading-screen="750">
+              <!-- modal edit User -->
+                <!-- modal fade bd-example-modal-lg -->
+                <div class=" bd-example-modal-lg"  id="modaledit_user" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+                    <div class="">
+                      <div class="modal-content">
+                        <div class="modal-body">
+                            <div class="container-fluid">
+                                <div class="row">
+                                    <div class="col-12 text-center">
+                                      <h3>เเก้ไขรายละเอียดข้อมูลของ<%= infoEdit.firstname + ' ' + infoEdit.lastname  %> </h3>
+                                    </div>
+                                    <div class="col-lg-5" >
+                                        <form id="formImage" action="/systemEditImage?id=<%= infoEdit._id %>" method="POST" enctype="multipart/form-data">
+                                            <div class="text-center mt-3">
+                                                <img id="blah" src="/upload/<%= infoEdit.image%>" alt="your image">
+                                            </div>
+                                            <div class="card-body">
+                                                <input type='file' class="form-control mb-2" id="image" name="image" onchange="readURL(this);"   />
+                                                <button class="btn btn-primary btn-block" type="submit" onclick="saveImage()">บันทึก</button>
+                                                <small class="text-secondary font-weight-bold">
+                                                    tip : รู้หรือไม่ถ้าไม่กดบันทึกจะไม่เกิดเปลี่ยนเเปลง **กรุณากดบันทึก**
+                                                </small>
+                                            </div>
+                                        </form>
+                                    </div>
+                                    <div class="col-lg-7">
+                                      <div class="row">
+                                        <div class="col-12 col-sm-12 col-md-12 mt-2">
+                                          <label for="">รหัสบัตรประชาชน</label> 
+                                          <div class="input-group mb-3">
+                                            <input type="number" class="form-control" value="<%= infoEdit.idcard %>" name="idcard" placeholder="กรอกเลขบัตรประชาชน 13 หลัก" disabled>
+                                            <div class="input-group-append">
+                                              <span class="input-group-text" id="basic-addon2" onclick="editIdcard('<%= infoEdit._id %>','<%= infoEdit.idcard %>')">เเก้ไข</span>
+                                            </div>
+                                          </div>
+                                        </div>
+                                        <div class="col-12 col-sm-12 col-md-12" >
+                                          <label for="">รหัสนักศึกษา</label>
+                                          <div class="input-group mb-3">
+                                            <input type="text" class="form-control" value="<%= infoEdit.idstudent %> " name="idstudent" placeholder="กรอกรหัสนักศึกษา" disabled>
+                                            <div class="input-group-append">
+                                              <span class="input-group-text" id="basic-addon2" onclick="editStudent('<%= infoEdit._id %>','<%= infoEdit.idstudent %>')"><a>เเก้ไข</a></span>
+                                            </div>
+                                          </div>
+                                        </div>
+                                        <div class="col-12 col-sm-12 col-md-12">
+                                          <label for="">ชื่อ-นามสกุล</label>
+                                          <div class="input-group mb-3">
+                                            <input type="text" class="form-control"  value="<%= infoEdit.firstname + ' ' + infoEdit.lastname %>" placeholder="กรอกชื่อ" disabled >
+                                            <div class="input-group-append">
+                                              <span class="input-group-text" id="basic-addon2" onclick="editName('<%= infoEdit._id %>','<%= infoEdit.firstname %>','<%= infoEdit.lastname %>')">เเก้ไข</span>
+                                            </div>
+                                          </div>
+                                        </div>
+                                        <div class="col-12 col-sm-12 col-md-12">
+                                          <label for="">อีเมล์</label>
+                                          <div class="input-group mb-3">
+                                            <input type="email" class="form-control" value="<%= infoEdit.email %>" name="email" placeholder="example@gmail.com"  disabled>
+                                            <div class="input-group-append">
+                                              <span class="input-group-text" id="basic-addon2"  onclick="editEmail('<%= infoEdit._id %>','<%= infoEdit.email %>')">เเก้ไข</span>
+                                            </div>
+                                          </div>
+                                        </div>
+                                        <div class="col-12 col-sm-12 col-md-12">
+                                          <label for="">รหัสผ่าน</label>
+                                          <div class="input-group mb-3">
+                                            <input type="password" class="form-control"  name="password"  placeholder="***************"  disabled>
+                                            <div class="input-group-append">
+                                              <span class="input-group-text" id="basic-addon2"  onclick="editPassword('<%= infoEdit._id %>')">เเก้ไข</span>
+                                            </div>
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </div>
+                                </div>
+                                <form id="formInfo" action="/systemEditInfo?id=<%= infoEdit._id %> " method="POST">
+                                  <div class="row  p-2" >
+                                    <div class=" col-sm-12 col-md-6  col-lg-3" >
+                                      <label for="">ชื่อเล่น</label>
+                                      <input type="text" class="form-control "  value="<%= infoEdit.nickname %>" id="nickname" name="nickname">
+                                   </div>
+                                    <div class=" col-sm-12 col-md-6  col-lg-3" >
+                                      <label for="">วันเดือนปีเกิด</label>
+                                      <input type="date" class="form-control"  id="birthday" name="birthday" >
+                                    </div>
+                                    <div class=" col-sm-12 col-md-6 col-lg-3">
+                                      <label for="">เพศ</label>
+                                      <select class="form-control" type="text" id="gender"  name="gender"  >
+                                        <option value="" selected>--กรุณาเลือกเพศ--</option>
+                                        <option value="ชาย" >ชาย</option>
+                                        <option value="หญิง">หญิง</option>
+                                      </select>
+                                    </div>
+                                    <div class=" col-sm-12 col-md-6 col-lg-3">
+                                      <label>แผนก  </label>
+                                      <% if(user_.role == 'system'){%> 
+                                        <select class="form-control text-dark" id="department_id" name="department_id">
+                                            <option value="" selected>--กรุณาเลือกแผนก--</option>
+                                            <% department.forEach(function(depart){ %>
+                                              <option value="<%= depart._id%>" ><%=  depart.name  %> </option>   
+                                              <% }); %>
+                                           
+                                        </select>
+                                        <% } %> 
+                             
+                                        <% if(user_.role == 'admin'){%> 
+                                     
+                                          <select class="form-control text-dark" id="department_id" name="department_id">
+                                        
+                                              <% department.forEach(function(depart){ %>
+                                                <% if(depart._id == user_.department_id.toString()){ %> 
+                                                <option value="<%= depart._id%>" selected><%= depart.name  %> </option>  
+                                                <% } %>  
+                                              <% }); %>
+                                             
+                                          </select>
+                                        <% } %> 
+                                    </div>
+                                    <div class=" col-sm-12 col-md-6 col-lg-3">
+                                      <label for="">รุ่น</label>
+                                      <input type="text" class="form-control"  value="<%= infoEdit.generation %> " name="generation" placeholder="รุ่นที่">
+                                    </div>
+                                    <div class=" col-sm-12 col-md-6 col-lg-3">
+                                      <label for="">ปีการศึกษา</label>
+                                      <input type="number" class="form-control"  value="<%= infoEdit.year %>" name="year" placeholder="ปีที่">
+                                    </div>
+                                    <div class=" col-sm-12 col-md-6 col-lg-3">
+                                      <label for="">Facebook</label>
+                                      <input type="text" class="form-control" value="<%= infoEdit.facebook %>" name="facebook" placeholder="ชื่อ facebook" >
+                                    </div>
+                                    <div class=" col-sm-12 col-md-6 col-lg-3">
+                                      <label for="">Line ID</label>
+                                      <input type="text" class="form-control" value="<%= infoEdit.line %>" name="line" placeholder="ไอดีไลน์" >
+                                    </div>
+                                    <div class=" col-sm-12 col-md-6 col-lg-3" >
+                                      <label for="">เบอร์โทร</label>
+                                      <input type="number" class="form-control" value="<%= infoEdit.phone %>"  name="phone" placeholder="เบอร์โทร">
+                                    </div>
+                                    <div class=" col-sm-12 col-md-6 col-lg-3">
+                                      <label for="">บทบาทหรือหน้าที่</label>
+                                      <% if(user_.role == 'admin'){%> 
+                                        <select class="form-control" type="text"  id="duty" name="duty">
+                                          <option value="student" selected>นักศึกษา</option>
+                                         
+                                        </select>
+                                    
+                                    
+                                      <% } %> 
+                                      <% if(user_.role == 'system'){%> 
+                                        <select class="form-control" type="text"  id="duty" name="duty">
+                                          <option value="student" selected>นักศึกษา</option>
+                                          <option value="teacher">อาจารย์</option>
+                                        </select>
+                                    
+                                      <% } %> 
+                                    </div>
+                                    <div class=" col-sm-12 col-md-6 col-lg-3">
+                                      <label>สิทธิในการใช้งาน</label>
+                                      <% if(user_.role == 'admin'){%> 
+                                        <% if(user_._id.toString() !==  infoEdit._id.toString()){ %> 
+                                        <select class="form-control" type="text"  id="role" name="role">
+                                        
+                                          <option value="user" selected>ผู้ใช้งาน</option>
+                                          
+                                        </select>
+                                        <% } %> 
+                                      <% } %> 
+                                      <% if(user_.role == 'system'){%> 
+                                        <select class="form-control" type="text"  id="role" name="role">
+                                          <option value="" disabled selected>--กรุณาเลือกสิทธิ--</option>
+                                          <option value="user" selected>ผู้ใช้งาน</option>
+                                          <option value="admin">ผู้ดูแลเเผนก</option>
+                                          <option value="system">ผู้ดูแลระบบ</option>
+                                        </select>
+                                    
+                                        <% } %> 
+                                        <% if(user_.role == 'admin'){%> 
+                                          <% if( user_._id ==  infoEdit._id){%> 
+                                            <select class="form-control" type="text"  id="role" name="role">
+                                            
+                                           
+                                              <option value="admin" selected>ผู้ดูแลเเผนก</option>
+                                           
+                                            </select>
+                                        
+                                            <% } %> 
+                                        <% } %> 
+                                      
+                                    </div>
+                                    <div class="col-sm-12 col-md-6 col-lg-3">
+                                      <label for="">อื่นๆ</label>
+                                      <input type="text" class="form-control" value="<%= infoEdit.other %>" name="other" placeholder="ฯลฯ">
+                                    </div>  
+                                    <div class="col-12 col-sm-12 col-md-12 mt-3 " >
+                                        <button type="submit" class="btn btn-primary btn-block ml-3" onclick="saveInfo()" >บันทึก</button>
+                                    </div>  
+                                  </div>
+                                </form>
+                            </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- //modal edit User -->
+                <!-- modalPassword -->
+                <div class="modal fade" id="passwordModal" tabindex="-1" role="dialog">
+                  <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                      <div class="modal-body">
+                        <form id="formPassword" method="POST">
+                          <div class="row">
+                            <div class="col-12 col-sm-12 col-md-12">
+                              <label for="">รหัสผ่านใหม่</label> 
+                              <div class="input-group mb-3">
+                                <input type="password" class="form-control" id="_password"  name="_password" placeholder="รหัสผ่านใหม่" >
+                              </div>
+                            </div>
+                            <div class="col-12 col-sm-12 col-md-12">
+                              <label for="">ยืนยันรหัสผ่าน</label> 
+                              <div class="input-group mb-3">
+                                <input type="password" class="form-control"id="c_password" name="c_password" placeholder="ยืนยันรหัสผ่าน" >
+                              </div>
+                            </div>
+                            <div class="col-12 col-sm-12 col-md-12">
+                              <div class="float-right">
+                                <button type="button" class="btn btn-danger" data-dismiss="modal" >ปิดหน้าต่าง</button>
+                                <button type="reset" class="btn btn-secondary ml-2" >ล้างข้อมูล</button>
+                                <button type="submit" class="btn btn-primary ml-2" onclick="checkPassword()">บันทึก</button>
+                              </div>
+                            </div>
+                          </div>
+                        </form>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <!-- //modalPassword -->
+
+
+                <!-- modal id -->
+                <div class="modal fade" id="idcardModal" tabindex="-1" role="dialog">
+                  <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                      <div class="modal-body">
+                        <form id="formIdcard" method="POST">
+                          <div class="row">
+                            <div class="col-12 col-sm-12 col-md-12">
+                              <label for="">รหัสบัตรประชาชน</label> 
+                              <div class="input-group mb-3">
+                                <input type="number" class="form-control" id="_Idcard" name="_Idcard" placeholder="กรอกเลขบัตรประชาชน 13 หลัก" >
+                              </div>
+                            </div>
+                            <div class="col-12 col-sm-12 col-md-12">
+                              <div class="float-right">
+                                <button type="button" class="btn btn-danger" data-dismiss="modal" >ปิดหน้าต่าง</button>
+                                <button type="reset" class="btn btn-secondary ml-2" >ล้างข้อมูล</button>
+                                <button type="submit" class="btn btn-primary ml-2" >บันทึก</button>
+                              </div>
+                            </div>
+                          </div>
+                        </form>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <!-- //modal id -->
+
+
+                <!-- modal std -->
+                <div class="modal fade" id="idstdModal" tabindex="-1" role="dialog">
+                    <div class="modal-dialog" role="document">
+                      <div class="modal-content">
+                        <div class="modal-body">
+                          <form id="formStudent" method="POST">
+                            <div class="row">
+                              <div class="col-12 col-sm-12 col-md-12" >
+                                <label for="">รหัสนักศึกษา</label>
+                                <div class="input-group mb-3">
+                                  <input type="number" class="form-control" id="_idstudent" name="_idstudent" placeholder="กรอกรหัสนักศึกษา" >
+                                </div>
+                              </div>
+                              <div class="col-12 col-sm-12 col-md-12">
+                                <div class="float-right">
+                                  <button type="button" class="btn btn-danger" data-dismiss="modal" >ปิดหน้าต่าง</button>
+                                  <button type="reset" class="btn btn-secondary ml-2" >ล้างข้อมูล</button>
+                                  <button type="submit" class="btn btn-primary ml-2" >บันทึก</button>
+                                </div>
+                              </div>
+                            </div>
+                          </form>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                <!-- //modal std -->
+
+                <!-- modal name-->
+                <div class="modal fade" id="nameModal" tabindex="-1" role="dialog">
+                  <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                      <div class="modal-body">
+                        <form id="formName" method="POST">
+                          <div class="row">
+                            <div class="col-12 col-sm-12 col-md-6">
+                              <label for="">ชื่อ</label>
+                              <input type="text" class="form-control" id="_firstname" name="_firstname"  placeholder="กรอกชื่อ" >
+                            </div>
+                            <div class="col-12 col-sm-12 col-md-6" >
+                              <label for="">นามสกุล</label>
+                              <input type="text" class="form-control" id="_lastname" name="_lastname"  placeholder="กรอกนามสกุล" >
+                            </div>
+                            <div class="col-12 col-sm-12 col-md-12 mt-2">
+                              <div class="float-right">
+                                <button type="button" class="btn btn-danger" data-dismiss="modal" >ปิดหน้าต่าง</button>
+                                <button type="reset" class="btn btn-secondary ml-2" >ล้างข้อมูล</button>
+                                <button type="submit" class="btn btn-primary ml-2">บันทึก</button>
+                              </div>
+                            </div>
+                          </div>
+                        </form>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <!-- //modal name-->
+
+                 <!-- modal email-->
+                 <div class="modal fade" id="emailModal" tabindex="-1" role="dialog">
+                  <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                      <div class="modal-body">
+                        <form id="formEmail" method="POST">
+                          <div class="row">
+                            <div class="col-12 col-sm-12 col-md-12">
+                              <label for="">อีเมล์</label>
+                              <div class="input-group mb-3">
+                                <input type="email" class="form-control" id="_email" name="_email" placeholder="example@gmail.com" >
+                              </div>
+                            </div>
+                            <div class="col-12 col-sm-12 col-md-12">
+                              <div class="float-right">
+                                <button type="button" class="btn btn-danger" data-dismiss="modal" >ปิดหน้าต่าง</button>
+                                <button type="reset" class="btn btn-secondary ml-2" >ล้างข้อมูล</button>
+                                <button type="submit" class="btn btn-primary ml-2">บันทึก</button>
+                              </div>
+                            </div>
+                          </div>
+                        </form>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <!-- //modal email-->
+
+        </div>
+        <!-- /.content-wrapper -->
+
+        <!-- footer -->
+        
+
+        <!-- Control Sidebar -->
+        <!-- <aside class="control-sidebar control-sidebar-dark">
+         
+        </aside> -->
+        <!-- /.control-sidebar -->
+      </div>
+      
+    <script>
+        var date = '<%= infoEdit.birthday %>'
+        var alert = '<%= message %>'
+        var gender = '<%= infoEdit.gender %>'
+        var department_id = "<%= infoEdit.department_id  %>" 
+        var duty = '<%= infoEdit.duty %>'
+        var role = '<%= infoEdit.role %>'
+        var uri = window.location.toString();
+    </script>
+
+    <script type="text/javascript" src="/javascripts/systemEditUser.js"></script>
+</body>
+</html>

@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/stylesheets/webBoard.css">
+    <title>วิทยาลัยอาชีวศึกษาภูเก็ต</title>
+    <link rel="icon" href="/images/loginLogo.png">
+</head>
+<body class="hold-transition sidebar-mini layout-fixed" data-panel-auto-height-mode="height">
+    <div class="wrapper">
+        <!-- Navbar -->
+        <%- include('privateTop'); -%>
+        <!-- /.navbar -->
+
+        <!-- Main Sidebar Container -->
+        <%- include('systemLeft'); -%>
+
+        <!-- Content Wrapper. Contains page content -->
+        <div class="content-wrapper iframe-mode" data-widget="iframe" data-loading-screen="750">
+               <div class="container">
+                   <div class="row mt-5">
+                           
+                        <% news.forEach(function(new_){ %>
+                            <div class="col-12 col-md-6 col-sm-12 col-lg-4">
+                                <div class="card" style="width: 100%;">
+                                    <img class="card-img-top" src="upload/<%= new_.image_name%>" style=" height: 200px; object-fit: cover;" alt="Card image cap">
+                                    <div class="card-body">
+                                      <h5 class="card-title font-weight-bold"><%= new_.name%></h5> <br>
+                                      เขียนโดย <%= new_.user.firstname + ' ' + new_.user.lastname %>
+                                       เเผนก <%= new_.department.name %> 
+                                       <br>
+                                       <small>โพสเมื่อ <%= moment(new_.updated).format("DD/MM/YYYY HH:mm:ss"); %> </small>
+                                      <p class="card-text hiddenText"><%= new_.detail %> </p>
+                                      <a href="/news_read?id=<%= new_._id %>" class="text-right btn btn-success" )">อ่านเพิ่มเติม</a>
+                                     
+                                      
+                                    </div>
+                                  </div>
+                            </div>
+                        <% }); %>
+                   </div>
+               </div>
+        </div>
+        <!-- /.content-wrapper -->
+
+        <!-- footer -->
+        
+
+        <!-- Control Sidebar -->
+        <!-- <aside class="control-sidebar control-sidebar-dark">
+         
+        </aside> -->
+        <!-- /.control-sidebar -->
+      </div>
+      <script>
+          function deleted(news_id){
+                Swal.fire({
+                title: 'ต้องการลบหรอไม่?',
+                text: "ถ้าคุณต้องการยกเลิกกรุณากดตกลงเพื่อลบ!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'ตกลง',
+                cancelButtonText: 'ยกเลิก'
+                }).then((result) => {
+                    if (result.isConfirmed == true) {
+                        window.location.href = '/news_delete/'+news_id
+                    }
+                })  
+          }
+      </script>
+</body>
+</html>

@@ -1,11 +1,104 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title><%= title %></title>
-    <link rel='stylesheet' href='/stylesheets/style.css' />
+    
+    <%- include('header'); -%>
   </head>
+ 
   <body>
-    <h1><%= title %></h1>
-    <p>Welcome to <%= title %></p>
+    <%- include('pubNavbar'); -%>
+    <div class="container">
+      <div class="row">
+        <div class="col-12">
+          <div class=" divShadow" tabindex="-1" id="modalLogin">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class=" text-center ml-2 mt-3">
+                  <div>
+                    <img src="/images/loginLogo.png" alt="" class="imgLogo">
+                    <h5 class="modal-title font-weight-bold">วิทยาลัยอาชีวศึกษาภูเก็ตยินดีต้อนรับเข้าสู่ระบบ</h5>
+                  </div>
+                </div>
+                <div class="modal-body">
+                  <form action="/login" method="POST" class="needs-validation" novalidate>
+                    <div class="form-group">      
+                      <label for="exampleInputEmail1">เลขบัตรประจำตัวประชาชน  :</label>
+                      <div class="input-group">
+                        <div class="input-group-prepend">
+                          <span class="input-group-text">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-person-badge" viewBox="0 0 16 16">
+                              <path d="M6.5 2a.5.5 0 0 0 0 1h3a.5.5 0 0 0 0-1h-3zM11 8a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/>
+                              <path d="M4.5 0A2.5 2.5 0 0 0 2 2.5V14a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V2.5A2.5 2.5 0 0 0 11.5 0h-7zM3 2.5A1.5 1.5 0 0 1 4.5 1h7A1.5 1.5 0 0 1 13 2.5v10.795a4.2 4.2 0 0 0-.776-.492C11.392 12.387 10.063 12 8 12s-3.392.387-4.224.803a4.2 4.2 0 0 0-.776.492V2.5z"/>
+                            </svg>
+                          </span>
+                        </div>
+                        <input type="text" class="form-control" id="validationCustom01" placeholder="Enter ID-CARD or Email"   name="username" required>
+                        
+                      </div>
+                      <small id="emailHelp" class="form-text text-muted">กรุณากรอกเลขบัตรประชาชน 13 หลัก หรือ email กรณีที่มีอีเมล์ลงทะเบียนไว้</small>
+                    </div>
+                    <div class="form-group">
+                      <label for="exampleInputPassword1">รหัสผ่าน :</label>
+                      <div class="input-group">
+                        <div class="input-group-prepend">
+                          <span class="input-group-text">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25 " fill="currentColor" class="bi bi-key" viewBox="0 0 16 16">
+                              <path d="M0 8a4 4 0 0 1 7.465-2H14a.5.5 0 0 1 .354.146l1.5 1.5a.5.5 0 0 1 0 .708l-1.5 1.5a.5.5 0 0 1-.708 0L13 9.207l-.646.647a.5.5 0 0 1-.708 0L11 9.207l-.646.647a.5.5 0 0 1-.708 0L9 9.207l-.646.647A.5.5 0 0 1 8 10h-.535A4 4 0 0 1 0 8zm4-3a3 3 0 1 0 2.712 4.285A.5.5 0 0 1 7.163 9h.63l.853-.854a.5.5 0 0 1 .708 0l.646.647.646-.647a.5.5 0 0 1 .708 0l.646.647.646-.647a.5.5 0 0 1 .708 0l.646.647.793-.793-1-1h-6.63a.5.5 0 0 1-.451-.285A3 3 0 0 0 4 5z"/>
+                              <path d="M4 8a1 1 0 1 1-2 0 1 1 0 0 1 2 0z"/>
+                            </svg>
+                          </span>
+                        </div>
+                        <input type="password" class="form-control" id="validationCustom02" placeholder="Enter Password" name="password" required>
+                    
+                      </div>
+                      <small id="emailHelp" class="form-text text-muted">รหัสผ่านเป็นเลขบัตรประจำตัวประชาชน 13 หลักกรณีที่ยังไม่เข้าไปเปลี่ยน password </small>
+                     
+                    </div>
+                    <!-- <div class="form-group form-check">
+                      <input type="checkbox" class="form-check-input" id="exampleCheck1">
+                      <label class="form-check-label" for="exampleCheck1">Check me out</label>
+                    </div> -->
+                    <button type="submit" class="btn btc-pkvc btn-block" >เข้าสู่ระบบ</button>
+                    
+                  </form>
+                </div>
+                <div class="modal-footer">
+               
+                  <a class="forgot" href="/forgot" > ลืมรหัสผ่านใช่หรอไม่ </a>
+                  <button type="button" class="btn btc-red" data-dismiss="modal" >Close</button>
+             
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script type="text/javascript">
+      var err = '<%= message %>'
+      if(err == 'loginFail'){
+            Swal.fire({
+            title: 'เกิดข้อพิดพลาด?',
+            text: "ไม่มีบัญชีผู้ใช้หรือรหัสผ่านผิด!",
+            icon: 'warning',
+            confirmButtonColor: '#dc143c',
+            confirmButtonText: 'ตกลง'
+            }).then((result) => {
+                if (result) {
+                 
+                }
+            }) 
+        } 
+  
+   </script> 
+   <script type="text/javascript">
+    var uri = window.location.toString();
+    if (uri.indexOf("?") > 0) {
+        var clean_uri = uri.substring(0, uri.indexOf("?"));
+        window.history.replaceState({}, document.title, clean_uri);
+    }
+</script>
   </body>
+  
 </html>
+

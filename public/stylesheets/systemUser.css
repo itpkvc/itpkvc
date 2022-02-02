@@ -1,0 +1,91 @@
+.addheader{
+   
+}
+/*system*/
+/* imageDesign */
+#blah{
+    width: 300px;
+    height: 300px;
+    object-fit: cover;
+    text-align: center;
+}
+#basic-addon2{
+    cursor: pointer;
+    background-color: #007bff;
+    color: white;
+ 
+}
+
+.imagebtn{
+    
+    width: 100px ;
+}
+#blahedit{
+    width: 300px;
+    height: 300px;
+    object-fit: cover;
+    text-align: center;
+}
+.show_image{
+    width: 50px;
+    height: 50px;
+    object-fit: cover;
+}
+.table tbody tr td{
+    vertical-align: middle;
+}
+.table thead tr th{
+  
+    vertical-align: middle;
+}
+.btnt{
+    width: 50px;
+    text-align: center;
+}
+#infoblah{
+    width: 300px;
+    height: 300px;
+    object-fit: cover;
+    text-align: center;
+}
+
+.td_btnt{
+    width: 60px;
+    text-align: center;
+}
+.td_btnt1{
+    width: 65px;
+    text-align: center;
+}
+.withcss{
+    width: 334px;
+}
+.btc button{
+    width: 120px;
+}
+@media screen and (max-width: 1150px) {
+    .none-genyear{
+            display: none;
+    }
+  }
+@media screen and (max-width: 1040px) {
+    .none-std{
+        display: none;
+    }
+    .withcss{
+        width: 270px;
+    }
+}
+@media screen and (max-width: 690px) {
+    .none-id{
+        display: none;
+    }
+    .withcss{
+        width: 334px;
+    }
+}
+@media screen and (max-width: 550px) {
+    .none-department{
+        display: none;
+    }
+}

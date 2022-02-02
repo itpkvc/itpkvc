@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>วิทยาลัยอาชีวศึกษาภูเก็ต</title>
+    <link rel="icon" href="/images/loginLogo.png">
+    <link rel="stylesheet" href="/stylesheets/webBoard.css">
+</head>
+<body class="hold-transition sidebar-mini layout-fixed ml-4 mr-4" data-panel-auto-height-mode="height">
+    <div class="wrapper">
+        <!-- Navbar -->
+        <%- include('privateTop'); -%>
+        <!-- /.navbar -->
+
+        <!-- Main Sidebar Container -->
+        <%- include('systemLeft'); -%>
+
+        <!-- Content Wrapper. Contains page content -->
+        <div class="content-wrapper iframe-mode" data-widget="iframe" data-loading-screen="750">
+            <div class="container mb-3">
+                <div class="row ">
+                    <div class="col-12 text-center">
+                        
+                        <h3 class="font-weight-bold">
+                            หน้าจัดการกระทู้    
+                        </h3>
+                    </div>   
+                </div>
+                <div class="row">
+                    <div class="col-12">
+                        <div class="input-group  mt-3 " onclick="searchTheme()">
+                            <div class="input-group-prepend">
+                                <div class="input-group-text font-weight-bold">ค้นหากระทู้ที่ต้องการ</div>
+                            </div>
+                            <input  class="form-control" type="text" placeholder="Search.." disabled>
+                            <div class="input-group-prepend">
+                                <div class="input-group-text  bg-primary rounded">ค้นหา</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="container"  id="findAll">  
+            </div>
+            <div class="modal fade  bd-example-modal-lg" id="ShowLargeImage" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-lg">
+                  <div class="modal-content">
+                        <img id="largeImage" src="/upload/man.jpg" >
+                  </div>
+                </div>
+            </div>  
+        </div>
+
+        <!-- modal -->
+        <div class="modal fade bd-example-modal-lg" id="searchThemeModal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+              <div class="modal-content">
+               
+                    <table class="table">   
+                        <thead>
+                            <tr>
+                                <td colspan="4">
+                                    <div class="input-group  mt-3 mb-3">
+                                        <div class="input-group-prepend">
+                                        <div class="input-group-text font-weight-bold">ค้นหา</div>
+                                        </div>
+                                        <input id="searchThemeOne" class="form-control" type="text" placeholder="Search..">
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                               <th class="searchSubject">ชื่อเรื่อง</th>
+                               <th class="searchName" >โดย</th>
+                               <th width="190px" class="searchDeapart" >แผนก</th>
+                               <th class="text-center">เข้าร่วม</th>
+                            </tr>
+                        </thead>
+                        <tbody id="searchBody">
+                        
+                        </tbody>
+                    </table>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    </div>
+              </div>
+            </div>
+        </div>
+       
+    <script>
+        var uri = window.location.toString(); 
+    </script>  
+     <script type="text/javascript" src="/javascripts/systemThemeLocal.js"></script>  
+</body>
+</html>

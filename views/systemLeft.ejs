@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel='stylesheet' href='/stylesheets/systemLeft.css' />
+</head>
+<style>
+  #infoImage {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit:  cover;
+  }
+</style>
+<body>
+    <aside class="main-sidebar  sidebar-dark-primary elevation-4">
+        <!-- Brand Logo -->
+        <a  class="brand-link">
+          <img src="/javascripts/adminLTE/dist/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8"> 
+          <span class="brand-text font-weight-light text-center" id="headLeft">
+
+            Super Admin
+          </span>
+        </a>
+    
+        <!-- Sidebar -->
+        <div class="sidebar">
+          <!-- Sidebar user panel (optional) -->
+          <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+            <div class="image">
+              <img id="infoImage" scr="/upload/man.jpg" >
+            </div>
+            <div class="info">
+              <a id="infoName"  class="d-block"></a>
+            </div>
+          </div>
+          <!-- Sidebar Menu -->
+          <nav class="mt-2">
+            <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+              <!-- Add icons to the links using the .nav-icon class
+                   with font-awesome or any other icon font library -->
+                <li class="nav-header">ข่าวสาร</li>
+                <li class="nav-item"  >
+                  <a  class="nav-link" onclick="news_()">
+                    <i class="fa fa-newspaper nav-icon nav-icon"></i>
+                    <p>ข่าวสาร</p>
+                  </a>
+                </li>
+                <li class="nav-item user1"  >
+                  <a  class="nav-link" onclick="news_show()">
+                    <i class="fa fa-tasks nav-icon nav-icon"></i>
+                    <p>จัดการข่าวสาร</p>
+                  </a>
+                </li>
+                <li class="nav-item "  >
+                  <a  class="nav-link" onclick="gen()">
+                    <i class="fa fa-users nav-icon nav-icon"></i>
+                    <p>ทำเนียบรุ่น</p>
+                  </a>
+                </li>
+                <li class="nav-header user1">เมนูผู้ดูแลระบบ</li>
+                <li class="nav-item user1"  >
+                  <a  class="nav-link" onclick="goUser()">
+                    <i class="fa fa-user nav-icon nav-icon"></i>
+                    <p>จัดการผู้ใช้งาน</p>
+                  </a>
+                </li>
+             
+                <!-- <li class="nav-item">
+                  <a href="#" class="nav-link">
+                    <i class="fa fa-user nav-icon"></i>
+                    <p>
+                      จัดการผู้ใช้งาน
+                      <i class="right fas fa-angle-left"></i>
+                    </p>
+                  </a>
+                  <ul class="nav nav-treeview">
+                    <li class="nav-item">
+                      <a onclick="goUser()" class="nav-link">
+                        <i class="far fa-circle nav-icon"></i>
+                        <p>ผู้ใช้งานทั้งหมด</p>
+                      </a>
+                    </li>
+                    <li class="nav-item">
+                      <a  class="nav-link">
+                        <i class="far fa-circle nav-icon"></i>
+                        <p>นักศึกษา</p>
+                      </a>
+                    </li>
+                    <li class="nav-item">
+                      <a href="pages/charts/inline.html" class="nav-link">
+                        <i class="far fa-circle nav-icon"></i>
+                        <p>อาจารย์</p>
+                      </a>
+                    </li>
+                    <li class="nav-item">
+                      <a href="pages/charts/uplot.html" class="nav-link">
+                        <i class="far fa-circle nav-icon"></i>
+                        <p>ผู้ดูแลแผนก</p>
+                      </a>
+                    </li>
+                  </ul>
+                </li> -->
+                <li class="nav-item user1 " id="depart1"   >
+                  <a  class="nav-link" onclick="goDepart()">
+                    <i class="fa fa-address-book nav-icon"></i>
+                    <p>จัดการแผนก</p>
+                  </a>
+                </li>
+                <li class="nav-item user1"  >
+                  <a  class="nav-link" onclick="goSystemWebBoard()">
+                    <i class="fa fa-comment nav-icon"></i>
+                    <p>จัดการกระทู้</p>
+                  </a>
+                </li>
+                <li class="nav-header">เมนูผู้ใช้งาน</li>
+                <li class="nav-item"  >
+                  <a  class="nav-link" onclick="goWebboard()">
+                    <i class="fa fa-newspaper nav-icon"></i>
+                    <p>กระทู้</p>
+                  </a>
+                </li>
+               
+                <li class="nav-header">จัดการข้อมูลส่วนตัว</li>
+                <li class="nav-item"  >
+                  <a  class="nav-link" onclick="goMyThemeLocal()">
+                    <i class="fa fa-user-circle nav-icon"></i>
+                    <p>กระทู้ของฉัน</p>
+                  </a>
+                </li>
+                <li class="nav-item"  >
+                  <a  class="nav-link" onclick="setting()">
+                    <i class="fa fa-cogs nav-icon"></i>
+                    <p>เเก้ไขข้อมูลส่วนตัว</p>
+                  </a>
+                </li>
+            
+                <li class="nav-item"  >
+                  <a  class="nav-link" onclick="logout()">
+                    <i class="fa fa-window-close nav-icon"></i>
+                    <p>ออกจากระบบ</p>
+                  </a>
+                </li>
+                  <!-- <ul class="nav nav-treeview">
+                    <li class="nav-item">
+                      <a  class="nav-link" (click)="go_system_user()">
+                        <i class="fa fa-user nav-icon" aria-hidden="true"></i>
+                        <p>จัดการผู้ใช้งาน</p>
+                      </a>
+                    </li>
+                    <li class="nav-item"  (click)="go_system_department()">
+                      <a  class="nav-link">
+                        <i class="fa fa-address-book nav-icon"></i>
+                        <p>จัดการแผนก</p>
+                      </a>
+                    </li>
+                  
+                    
+                  </ul> -->
+            </ul>
+          </nav>
+          <!-- /.sidebar-menu -->
+        </div>
+        <!-- /.sidebar -->
+      </aside>
+    
+      <script src="/javascripts/systemLeft.js"></script>
+</body>
+</html>

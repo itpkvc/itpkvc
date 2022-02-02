@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>วิทยาลัยอาชีวศึกษาภูเก็ต</title>
+    <link rel="icon" href="/images/loginLogo.png">
+    <link rel="stylesheet" href="/stylesheets/webBoard.css">
+</head>
+<body class="hold-transition sidebar-mini layout-fixed ml-4 mr-4" data-panel-auto-height-mode="height">
+    <div class="wrapper">
+        <!-- Navbar -->
+        <%- include('privateTop'); -%>
+        <!-- /.navbar -->
+
+        <!-- Main Sidebar Container -->
+        <%- include('systemLeft'); -%>
+
+        <!-- Content Wrapper. Contains page content -->
+        <div class="content-wrapper iframe-mode" data-widget="iframe" data-loading-screen="750">    
+            <div class="container mb-3">
+                <div class="col-12">
+                    <div class="input-group  mt-3 " onclick="searchTheme()">
+                        <div class="input-group-prepend">
+                            <div class="input-group-text font-weight-bold">ค้นหากระทู้ที่ต้องการ</div>
+                        </div>
+                        <input  class="form-control" type="text" placeholder="Search.." disabled>
+                        <div class="input-group-prepend">
+                            <div class="input-group-text  bg-primary rounded">ค้นหา</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12">
+                    <div class="input-group  mt-3" data-toggle="modal" data-target="#themeModal" >
+                        <div class="input-group-prepend">
+                            <div class="input-group-text font-weight-bold">ตั้งกระทู้ของฉัน</div>
+                        </div>
+                        <input  class="form-control" type="text" placeholder="กระทู้อะไรดี" disabled>
+                        <div class="input-group-prepend">
+                            <div class="input-group-text  bg-primary rounded">ตกลง</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="container"  id="findAll">
+                  
+            </div>
+            
+            <!-- search modal -->
+            <!-- modal -->
+            <div class="modal fade bd-example-modal-lg" id="searchThemeModal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                
+                        <table class="table">   
+                            <thead>
+                                <tr>
+                                    <td colspan="4">
+                                        <div class="input-group  mt-3 mb-3">
+                                            <div class="input-group-prepend">
+                                            <div class="input-group-text font-weight-bold">ค้นหา</div>
+                                            </div>
+                                            <input id="searchThemeOne" class="form-control" type="text" placeholder="Search..">
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                <th class="searchSubject">ชื่อเรื่อง</th>
+                                <th class="searchName" >โดย</th>
+                                <th width="190px" class="searchDeapart" >แผนก</th>
+                                <th class="text-center">เข้าร่วม</th>
+                                </tr>
+                            </thead>
+                            <tbody id="searchBody">
+                            
+                            </tbody>
+                        </table>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        </div>
+                </div>
+                </div>
+            </div>
+            <!-- theme -->
+            <div class="modal fade bd-example-modal-lg" id="themeModal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-lg">
+                  <div class="modal-content">
+                    <div class="container">
+                        <form id="formTheme" action="/insertTheme" method="POST">
+                            <div class="col-12 text-center mt-3">
+                                <h4 class="font-weight-bold">สร้างกระทู้</h4>
+                            </div>
+                            <div class="col-12">  
+                                <div class="input-group mb-2">
+                                <div class="input-group-prepend">
+                                    <div class="input-group-text font-weight-bold">ชื่อเรื่อง</div>
+                                </div>
+                                <input type="text" class="form-control" id="subject" name="subject" placeholder="ชื่อเรื่อง">
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="form-group">
+                                    <label class="ml-2">เนื้อหา :</label>
+                                    <textarea class="form-control" id="material" name="material" rows="10"></textarea>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="form-group text-center btnTheme">
+                                    <div class="d-inline ">
+                                        <button type="submit" class="btn btn-primary" onclick="saveTheme()">ตกลง</button> 
+                                    </div>
+                                    <div class="d-inline ">
+                                        <button type="reset" class="btn btn-secondary">ล้างข้อมูล</button> 
+                                    </div>
+                                    <div class="d-inline ">
+                                        <button class="btn btn-danger" data-dismiss="modal">ยกเลิก</button> 
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                  </div>
+                </div>
+            </div>
+            <!-- //theme -->
+            <!-- imageTheme -->
+            <div class="modal fade bd-example-modal-lg" id="themeImageModal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-lg">
+                  <div class="modal-content">
+                    <div class="container">
+                        <div class="row">
+                                <div class="col-12 mt-3">
+                                    <h4 class="font-weight-bold text-center">เพิ่มรูปภาพ</h4>
+                                </div>
+                                <div class="col-12 ">  
+                                    <div class="input-group mb-2">
+                                    <div class="input-group-prepend">
+                                        <div class="input-group-text font-weight-bold">เพิ่มรูปภาพ</div>
+                                    </div>
+                                    <input type="file" class="form-control" id="image" name="image" placeholder="ชื่อเรื่อง">
+                                    <div class="input-group-prepend btnSaveImg">
+                                        <div class="input-group-text"  onclick="saveImage('<%= them_id%>')">
+                                            <a>ตกลง</a>
+                                        </div>
+                                        <div class="input-group-text" onclick="resetSaveImage()">
+                                            <a>รีเซ็ต</a>
+                                        </div>
+                                    </div>
+                                    </div>
+                                </div>
+                        </div>
+                        <div class="row" id="showImage">
+                             
+                        </div> 
+                        <div class="row p-3">
+                             <a  class="btn btn-primary btn-block" onclick="checkImage()">เสร็จสิ้น</a>
+                        </div> 
+                    </div>
+                  </div>
+                </div>
+            </div>  
+            <!-- //imageTheme -->
+            <div class="modal fade  bd-example-modal-lg" id="ShowLargeImage" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-lg">
+                  <div class="modal-content">
+                        <img id="largeImage" src="/upload/man.jpg" >
+                  </div>
+                </div>
+            </div>
+          
+        </div>
+    <script>
+     var them_id = '<%= them_id  %>'
+     var uri = window.location.toString(); 
+    </script>  
+    <script type="text/javascript" src="/javascripts/themeLocal.js"></script>
+</body>
+</html>

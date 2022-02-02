@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>วิทยาลัยอาชีวศึกษาภูเก็ต</title>
+    <link rel="icon" href="/images/loginLogo.png">
+    <link rel="stylesheet" href="/stylesheets/systemDepart.css">
+</head>
+<body class="hold-transition sidebar-mini layout-fixed" data-panel-auto-height-mode="height">
+    <div class="wrapper">
+        <!-- Navbar -->
+        <%- include('privateTop'); -%>
+        <!-- /.navbar -->
+
+        <!-- Main Sidebar Container -->
+        <%- include('systemLeft'); -%>
+
+        <!-- Content Wrapper. Contains page content -->
+        <div class="content-wrapper iframe-mode" data-widget="iframe" data-loading-screen="750">
+            <div class="container-fluid ml-3 mr-3 mt-3">
+                <div class="row border_bt ">
+                    <div class="col-12 text-center">
+                      <h3 class="font-weight-bold  ">หน้าจัดการข้อมูลแผนก</h3>
+                    </div>
+                </div>
+                <div class="row mt-2 ">
+                    <a class="btn btn-primary btn-block mb-2" id="deleteDepart" data-toggle="modal" data-target="#modaladdDepart">เพิ่มข้อมูลแผนก</a>
+                </div>
+            </div>
+            <div class="container">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th></th>
+                            <th></th>
+                            <th >ชื่อแผนก</th>
+                            <th class="th_edit">เเก้ไข</th>
+                            <th class="th_edit">ลบ</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% data.forEach((department)=>{ %> 
+                          <tr >
+                              <td></td>
+                              <td></td>
+                              <td><%= department.name %> </td>
+                              <td class="th_edit">
+                                  <a class="btn btn-danger" id="deleteDepartment"  onclick="confirmDepart('<%= department.id %>')" >
+                                      ลบ
+                                  </a>
+                              </td>
+                              <td class="th_edit">
+                                  <a class="btn btn-primary" id="editDepartment" onclick="editDepartment('<%= department.id %>')"   >
+                                      แก้ไข
+                                  </a>
+                              </td>
+                              <td></td>
+                          </tr>
+                     
+                        <% }) %> 
+                        
+                    </tbody>
+                </table>
+            </div>
+
+          
+            <div class="modal fade" tabindex="-1" role="dialog" id="modaladdDepart">
+              <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <!-- <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button> -->
+                  </div>
+                  <form class="needs-validation" action="/systemInsertDepart" method="POST" novalidate>
+                    <div>
+                        <div class="modal-body" >
+                          <div class="row">
+                            <div class="col-12 col-sm-12 col-md-12">
+                                <label>เเผนก :</label>
+                                <input type="text" class="form-control" name="name"  required>
+                            </div>
+                          </div>
+                        </div>
+                      <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary">บันทึก</button>
+                        <button type="button" class="btn btn-danger" data-dismiss="modal">ปิดหน้าต่าง</button>
+                      </div>
+                    </div>
+                  </form>
+                  </div>
+              </div>
+            </div>
+
+            <!-- edit -->
+            <div class="modal fade"  id="modaladdDepartedit" tabindex="-1" role="dialog">
+              <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <!-- <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button> -->
+                  </div>
+                  <form class="needs-validation" action="/systemEditDepart" method="POST" novalidate>
+                    <div>
+                        <div class="modal-body" >
+                          <div class="row">
+                            <div class="col-12 col-sm-12 col-md-12">
+                                <label>เเผนก :</label>
+                                <input type="text" class="form-control d-none" id="infoid"  name="infoid"  >
+                                <input type="text" class="form-control" id="infoname"  name="infoname"  required>
+                            </div>
+                          </div>
+                        </div>
+                      <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary">บันทึก</button>
+                        <button type="button" class="btn btn-danger" data-dismiss="modal">ปิดหน้าต่าง</button>
+                      </div>
+                    </div>
+                  </form>
+                  </div>
+              </div>
+            </div>
+          
+        <!-- /.content-wrapper -->
+
+        <!-- footer -->
+        
+
+        <!-- Control Sidebar -->
+        <!-- <aside class="control-sidebar control-sidebar-dark">
+         
+        </aside> -->
+        <!-- /.control-sidebar -->
+      </div>
+      <script>
+          var err = '<%= message %>'  
+          function editDepartment(id){
+            event.preventDefault();
+            $.post("/systemInfoDepart?id="+id,function(data){
+                $('#infoid').val(data._id);
+                $('#infoname').val(data.name);
+                $('#modaladdDepartedit').modal();
+            })
+          }
+      </script>
+      <script src="/javascripts/systemDepart.js"></script>
+</body>
+</html>

@@ -5,9 +5,8 @@
  */
 
 var app = require('../app');
-var debug = require('debug')('project:server');
+var debug = require('debug')('tes:server');
 var http = require('http');
-
 
 /**
  * Get port from environment and store in Express.
@@ -21,102 +20,6 @@ app.set('port', port);
  */
 
 var server = http.createServer(app);
-var express = require('express');
-var router = express.Router();
-const { Server } = require("socket.io");
-const io = new Server(server);
-var Chat = require('../models/chatModel');
-var Objectid = require('mongodb').ObjectID;
-io.on('connection', (socket) => {
-  
-  console.log('a user connected');
-  //find Chat
-  socket.on("findTheme",data=>{
-      //console.log(data)
-      data.theme_id = new Objectid(data.theme_id)
-      Chat.aggregate([
-          {
-            $match: { theme_id: data.theme_id }
-          },
-          {
-              "$lookup": {
-                  "from": "users",
-                  "localField": "user_id",
-                  "foreignField": "_id",
-                  "as": "user"
-              },
-          },
-          {
-            $unwind : '$user'
-          },
-          {
-            $lookup: {
-              from: "themes",
-              localField: "theme_id",
-              foreignField: "_id",
-              as: "theme"
-            }
-          },
-          {
-              $unwind : '$theme'
-          },
-          { $sort: {  updated: -1 } }
-      ]).exec((err,res)=>{
-        if(err){
-          throw err;
-        }
-        // Emit the messages
-        socket.emit('output', res);
-      })
-  })
- 
-  // handle the new message event
-  socket.on("new_message", data => {
-    //console.log(data)
-    if(data){
-      Chat.insertMany(data,function(err,result){
-        console.log(result[0])
-        Chat.aggregate([
-          {
-            $match: { _id: result[0]._id }
-          },
-          {
-              "$lookup": {
-                  "from": "users",
-                  "localField": "user_id",
-                  "foreignField": "_id",
-                  "as": "user"
-              },
-          },
-          {
-            $unwind : '$user'
-          },
-          {
-            $lookup: {
-              from: "themes",
-              localField: "theme_id",
-              foreignField: "_id",
-              as: "theme"
-            }
-          },
-          {
-              $unwind : '$theme'
-          },
-          { $sort: {  updated: -1 } }
-      ]).exec((err,resultOne)=>{
-        //console.log(resultOne)
-        io.emit('output', resultOne)
-      })
-       
-      })
-    }   
-  })
-  socket.on('typing', data => {
-    //console.log(data)
-    socket.emit('typing')
-  })
-});
-
 
 /**
  * Listen on provided port, on all network interfaces.

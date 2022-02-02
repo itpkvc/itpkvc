@@ -1,38 +1,11 @@
 <!DOCTYPE html>
 <html>
   <head>
-    
-    <%- include('header'); -%>
+    <title><%= title %></title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
   </head>
- 
   <body>
-    <%- include('pubNavbar'); -%>
-   
-    <script type="text/javascript">
-      var err = '<%= message %>'
-      if(err == 'loginFail'){
-            Swal.fire({
-            title: 'เกิดข้อพิดพลาด?',
-            text: "ไม่มีบัญชีผู้ใช้หรือรหัสผ่านผิด!",
-            icon: 'warning',
-            confirmButtonColor: '#dc143c',
-            confirmButtonText: 'ตกลง'
-            }).then((result) => {
-                if (result) {
-                  $('#modalLogin').modal();
-                }
-            }) 
-        } 
-  
-   </script> 
-   <script type="text/javascript">
-    var uri = window.location.toString();
-    if (uri.indexOf("?") > 0) {
-        var clean_uri = uri.substring(0, uri.indexOf("?"));
-        window.history.replaceState({}, document.title, clean_uri);
-    }
-</script>
+    <h1><%= title %></h1>
+    <p>Welcome to <%= title %></p>
   </body>
-  
 </html>
-

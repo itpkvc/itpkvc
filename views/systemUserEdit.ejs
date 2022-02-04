@@ -53,7 +53,7 @@
                                             <div class="input-group-append">
                                               <% if(user_.role !== 'user') { %> 
                                               <span class="input-group-text" id="basic-addon2" onclick="editIdcard('<%= infoEdit._id %>','<%= infoEdit.idcard %>')">เเก้ไข</span>
-                                             
+                                              <% } %>
                                             </div>
                                           </div>
                                         </div>
@@ -64,7 +64,7 @@
                                             <div class="input-group-append">
                                               <% if(user_.role !== 'user') { %> 
                                               <span class="input-group-text" id="basic-addon2" onclick="editStudent('<%= infoEdit._id %>','<%= infoEdit.idstudent %>')"><a>เเก้ไข</a></span>
-                                              
+                                              <% } %>
                                             </div>
                                           </div>
                                         </div>

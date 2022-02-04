@@ -112,11 +112,16 @@
                                     </div>
                                     <div class=" col-sm-12 col-md-6 col-lg-3">
                                       <label for="">เพศ</label>
+                                      <% if(user_.role !== 'user'){%> 
                                       <select class="form-control" type="text" id="gender"  name="gender"  >
                                         <option value="" selected>--กรุณาเลือกเพศ--</option>
                                         <option value="ชาย" >ชาย</option>
                                         <option value="หญิง">หญิง</option>
                                       </select>
+                                      <% } %>
+                                      <% if(user_.role == 'user'){%> 
+                                        <input type="text" class="form-control "  value="<%= infoEdit.gender %>" id="gender"  name="gender" readonly>
+                                      <% } %>
                                     </div>
                                     <div class=" col-sm-12 col-md-6 col-lg-3">
                                       <label>แผนก  </label>

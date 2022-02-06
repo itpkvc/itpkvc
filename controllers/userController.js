@@ -6,6 +6,49 @@ const crypto = require('crypto');
 const bcrypt = require('bcryptjs'); // hash password
 var Objectid = require('mongodb').ObjectID;
 
+exports.excel = async(req,res,next)=>{
+    var department = await Department.findOne({name:req.body.department_id});
+  var image ;
+  var password;
+  var idcard = req.body.idcard
+  if(req.body.gender == 'ชาย'){
+    image = 'man.jpg'
+  }else{
+    image = 'female.jpg'
+  }
+  password = idcard.toString();
+  //hash
+  const hash_password = bcrypt.hashSync(password, 10);
+  await User.insertMany({
+    idcard : req.body.idcard ,
+    email : req.body.email ,
+    idstudent : req.body.idstudent,
+    firstname : req.body.firstname  ,
+    lastname : req.body.lastname, 
+    department_id : department ,
+    role : 'user',
+    gender : req.body.gender,
+    birthday : req.body.birthday,
+    phone : req.body.phone ,
+    generation : req.body.generation ,
+    other : '',
+    password : hash_password ,
+    year : req.body.year,
+    facebook : req.body.facebook,
+    line : req.body.line,
+    duty : 'student',
+    image : image,
+    nickname : req.body.nickname
+  },(err,data)=>{
+    //console.log(data)
+      if(err) {
+        return res.send('err')
+      }else{
+        return res.send('success')
+      }   
+  })   
+}
+
 //-------------------------------Department------------------------------------------------
 exports.insertDepart = async(req,res,next)=>{
     if(req.body.name == ''){

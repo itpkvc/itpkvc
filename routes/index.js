@@ -95,6 +95,10 @@ router.post('/systemEditImage',authMiddleware.isLoggedLocal,authMiddleware.Where
 router.post('/systemEditInfo',authMiddleware.isLoggedLocal,authMiddleware.WhereDB,userController.editInfo)
 router.post('/systemEditPrimary',authMiddleware.isLoggedLocal,authMiddleware.WhereDB,userController.editPrimary)
 
+
+router.post('/excel',authMiddleware.isLoggedLocal,authMiddleware.WhereDB,userController.excel);
+
+
 router.get('/adminIndex',authMiddleware.isLoggedAdmin,authMiddleware.WhereDB,pageController.adminIndex);
 router.get('/userIndex',authMiddleware.isLoggedUser,authMiddleware.WhereDB,pageController.userIndex);
 

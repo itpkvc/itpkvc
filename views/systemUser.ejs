@@ -50,8 +50,15 @@
               <div class="row">
                 <div class="col-12 col-lg-6 col-md-6 col-sm-12">
                   <div class="form-group d-inline-flex  mr-2">
-                  
-                  
+                    <div class="input-group  mt-3 ">
+                      <div class="input-group-prepend">
+                          <div class="input-group-text font-weight-bold">เพิ่มผู้ใช้งานด้วย Excel</div>
+                      </div>
+                      <input  class="form-control" type="file" name="excel" id="excel" >
+                      <div class="input-group-prepend">
+                          <div class="input-group-text  bg-primary rounded" id="excel_click" style="cursor: pointer;">ตกลง</div>
+                      </div>
+                  </div>
                   </div>
                 </div>
                 <div class="col-12 col-lg-6 col-md-6 col-sm-12 text-right">
@@ -455,7 +462,43 @@
           var err = '<%= message %>'
           var user_id = '<%= user_id %>'
           var uri = window.location.toString();   
-
+          var input = document.getElementById('excel')
+          var excel_click = document.getElementById('excel_click')
+          excel_click.addEventListener('click', function(){
+             readXlsxFile(input.files[0]).then(function(data) {
+              $.each( data, function( key, value ) {
+                if(key !== 0){
+                  var obj= {
+                  "idcard" : value[0],
+                  "idstudent" : value[1],
+                  "firstname" : value[2],
+                  "lastname" : value[3],
+                  "nickname" : value[4],
+                  "birthday" : value[5],
+                  "gender" : value[6],
+                  "department_id" : value[7],
+                  "generation" : value[8],
+                  "year" : value[9],
+                  "email" : value[10],
+                  "facebook" : value[11],
+                  "line" : value[12],
+                  "phone" : value[13],
+                }
+                $.post( "/excel",obj, function( result ) {
+                    if(result == 'success'){
+                      location.reload();
+                    }
+                    
+                });
+                }
+                
+               
+             
+              });
+             
+              
+             });
+           })
           function teacher(){
             var value = 'teacher'
             $("#myTable tr").filter(function() {
@@ -488,7 +531,7 @@
           }
        
       </script>
-      
+        <script src="https://unpkg.com/read-excel-file@4.x/bundle/read-excel-file.min.js"></script> 
       <script type="text/javascript" src="/javascripts/systemUser.js"></script>
 </body>
 </html>

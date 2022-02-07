@@ -316,6 +316,10 @@ exports.systemThemeLocal = async(req,res,next)=>{
         autos
     })
 }
+exports.theme_edit = async(req,res)=>{
+    console.log(req.query)
+    res.render('theme_edit',{idTheme:req.query.idTheme})
+}
 //-------------------------------------------------------local------------------------------
 
 exports.themeLocal = async(req,res,next) => {

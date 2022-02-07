@@ -97,7 +97,7 @@ $( document ).ready(function() {
                             </div>
                             <div class="d-flex justify-content-end align-self-end">
                                     <div class="d-inline btn btn-primary mr-2 mb-2 " onClick="goChat('${value._id}')">เข้าร่วมกระทู้</div>
-                                    <div class="d-inline btn btn-secondary mr-2 mb-2" data-toggle="modal" data-target="#themeEditModal" onClick="editTheme('${value._id}')">เเก้ไขกระทู้</div>
+                                    <div class="d-inline btn btn-secondary mr-2 mb-2" onClick="editTheme('${value._id}')">เเก้ไขกระทู้</div>
                                     <div class="d-inline btn btn-danger mr-2 mb-2" onClick="deleteTheme('${value._id}')">ลบกระทู้นี้</div>
                             </div>
                             </div>
@@ -121,7 +121,7 @@ $( document ).ready(function() {
                                 </div>
                                 <div class="d-flex justify-content-end align-self-end">
                                         <div class="d-inline btn btn-primary mr-2 mb-2 " onClick="goChat('${value._id}')">เข้าร่วมกระทู้</div>
-                                        <div class="d-inline btn btn-secondary mr-2 mb-2"data-toggle="modal" data-target="#themeEditModal" onClick="editTheme('${value._id}')">เเก้ไขกระทู้</div>
+                                        <div class="d-inline btn btn-secondary mr-2 mb-2" onClick="editTheme('${value._id}')">เเก้ไขกระทู้</div>
                                         <div class="d-inline btn btn-danger mr-2 mb-2 " onClick="deleteTheme('${value._id}')">ลบกระทู้นี้</div>
                                 </div>
                             </div>
@@ -150,6 +150,9 @@ goChat=(idTheme)=>{
     window.location.href = '/chat?idTheme='+idTheme
 }
 editTheme=(idTheme)=>{
+    window.location.href = '/theme_edit?idTheme='+idTheme
+}
+/*editTheme=(idTheme)=>{
     $("#showImage").html("");
     //console.log(idTheme)
     var obj = {
@@ -237,7 +240,7 @@ editTheme=(idTheme)=>{
 
         }
     })
-}
+}*/
 deleteImage=(id,image,loop)=>{
 //console.log(id)
 //console.log(image)

@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>วิทยาลัยอาชีวศึกษาภูเก็ต</title>
+    <link rel="icon" href="/images/loginLogo.png">
+    <link rel="stylesheet" href="/stylesheets/webBoard.css">
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+</head>
+<body class="hold-transition sidebar-mini layout-fixed" data-panel-auto-height-mode="height">
+    <div class="wrapper">
+        <!-- Navbar -->
+        <%- include('privateTop'); -%>
+        <!-- /.navbar -->
+
+        <!-- Main Sidebar Container -->
+        <%- include('systemLeft'); -%>
+
+        <!-- Content Wrapper. Contains page content -->
+        <div class="content-wrapper iframe-mode" data-widget="iframe" data-loading-screen="750">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="container">
+                            <div class="col-12 text-center mt-3" >
+                                <h4 class="font-weight-bold">เเก้ไขสร้างกระทู้</h4>
+                            </div>
+                          
+                            <div class="col-12">  
+                                <div class="input-group mb-2">
+                                <div class="input-group-prepend">
+                                    <div class="input-group-text font-weight-bold">ชื่อเรื่อง</div>
+                                </div>
+                                <input type="text" class="form-control" id="subject" name="subject" placeholder="ชื่อเรื่อง">
+                                </div>
+                            </div>
+                            <div class="col-12">  
+                                <div class="input-group  mt-3" >
+                                    <div class="input-group-prepend">
+                                        <div class="input-group-text font-weight-bold">เเท็กกระทู้</div>
+                                    </div>
+                                    <input  class="form-control tags" type="text" name="auto" id="auto"  placeholder="ค้นหา" >
+                                    
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="form-group">
+                                    <label class="ml-2">เนื้อหา :</label>
+                                    <textarea class="form-control" id="material" name="material" rows="10"></textarea>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="form-group text-center ">
+                                    <div class="d-inline ">
+                                        <button type="submit" class="btn btn-primary btn-block" id="editTheme">บันทึกการเเก้ไข</button> 
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-12 mt-3">
+                                    <h4 class="font-weight-bold text-center">เพิ่มรูปภาพและเเก้ไข</h4>
+                                </div>
+                                <div class="col-12 ">  
+                                    <div class="input-group mb-2">
+                                    <div class="input-group-prepend">
+                                        <div class="input-group-text font-weight-bold">เพิ่มรูปภาพ</div>
+                                    </div>
+                                    <input type="file" class="form-control" id="image" name="image" placeholder="ชื่อเรื่อง">
+                                    <div class="input-group-prepend btnSaveImg">
+                                        <div class="input-group-text"  id="saveImage">
+                                            <a>ตกลง</a>
+                                        </div>
+                                    </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row" id="showImage">
+                                
+                            </div> 
+                        </div>
+                    </div>
+                    <div class="col-12 text-right mb-3">
+                        
+                            <a href="/myThemeLocal" class="btn btn-secondary" style="width: 200px;">กลับ</a>
+                     
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- /.content-wrapper -->
+
+        <!-- footer -->
+        
+
+        <!-- Control Sidebar -->
+        <!-- <aside class="control-sidebar control-sidebar-dark">
+         
+        </aside> -->
+        <!-- /.control-sidebar -->
+      </div>
+      <script>
+          $( document ).ready(function() {
+            editTheme('<%= idTheme%>')
+            $(".tags").autocomplete({
+            source:function(req,res){
+                $.ajax({
+                    url:'/auto',
+                    method:'post',
+                    dataType:'json',
+                    data:{'auto':req.term},
+                    success:function(data){ 
+                        var x = new Array();
+                            $.each(data.data,(index,values)=>{
+                                console.log(values.name)
+                                x.push({'value':values.name});
+                        });
+                        res(x)
+                    },
+                    error:function(){
+                        alert('server error occured')
+                    }
+                });
+            }
+        });
+          
+        })
+        deleteImage=(id,image,loop)=>{
+        //console.log(id)
+        //console.log(image)
+            var obj = {
+                _id : id,
+                name : image
+            }
+            $.ajax({
+                url: '/deleteThemeImage',
+                type: 'POST',
+                contentType: 'application/json',
+                data: JSON.stringify(obj),
+                success: function(data){  
+                if(data == "success"){
+                    $(`#${loop}`).hide();
+                }
+                }
+            });
+        }
+        editTheme=(idTheme)=>{
+        
+                $("#showImage").html("");
+                console.log(idTheme)
+                var obj = {
+                    _id : idTheme
+                }
+                $.ajax({
+                    url: '/myInfoTheme',
+                    type: 'post',
+                    contentType: 'application/json',
+                    data: JSON.stringify(obj),
+                    success: function(result){
+                        //console.log(result.theme[0]._id);
+                        $('#material').val(result.theme[0].material);
+                        $('#subject').val(result.theme[0].subject);
+                        $('.tags').val(result.theme[0].auto);
+                        if(result.themeImage.length !== 0){
+                            $.each(result.themeImage, function(key, themeImage) {
+                                var div = document.getElementById('showImage');
+                                var loop = 'loop'+key
+                                //console.log(loop)
+                                div.innerHTML += `
+                                        <div class="col-lg-6 col-md-6 col-sm-12 mb-2" id="${loop}">
+                                            <div class="image-area">
+                                                <img src="/upload/${themeImage.name}"  alt="Preview">
+                                                <a class="remove-image" onclick="deleteImage('${themeImage._id}','${themeImage.name}','${loop}')" style="display: inline;">&#215;</a>
+                                            </div>
+                                        </div>  `; 
+                                //console.log(item.name);
+                            });
+                        }
+                        $("#editTheme").on("click", function(){
+                        var obj = {
+                            material : $('#material').val(),
+                            subject :  $('#subject').val(),
+                            auto :  $('#auto').val(),
+                            _id : result.theme[0]._id
+                        }  
+                        $.ajax({
+                            url: '/myEditTheme',
+                            type: 'POST',
+                            contentType: 'application/json',
+                            data: JSON.stringify(obj),
+                                success: function (data) { 
+                                    //console.log(data)
+                                    Swal.fire({
+                                        title: 'สำเร็จ!',
+                                        text: "เเก้ไขข้อมูลสำเร็จ!",
+                                        icon: 'success',
+                                        confirmButtonColor: '#dc143c',
+                                        confirmButtonText: 'ตกลง'
+                                    })
+                                }
+                            })
+                        });
+                        $("#saveImage").on("click", function(){
+                            var div = document.getElementById('showImage');
+                            $("#showImage").html("");
+                            var file = $("#image")[0].files[0];
+                            console.log(file)
+                            var formdata = new FormData();
+                            formdata.append("image", file);
+                            $.ajax({
+                                type: 'post',
+                                enctype: 'multipart/form-data',
+                                url: '/insertThemeImage?id='+result.theme[0]._id,
+                                data: formdata,
+                                processData: false,
+                                contentType: false,
+                                cache: false,
+                                success: function (data) {   
+                                    $.each(data, function(key, item) {
+                                        var loop = 'loop'+key
+                                        //console.log(loop)
+                                        div.innerHTML += `
+                                                <div class="col-lg-6 col-md-6 col-sm-12 mb-2" id="${loop}">
+                                                    <div class="image-area">
+                                                        <img src="/upload/${item.name}"  alt="Preview">
+                                                        <a class="remove-image" onclick="deleteImage('${item._id}','${item.name}','${loop}')" style="display: inline;">&#215;</a>
+                                                    </div>
+                                                </div>  `; 
+                                        //console.log(item.name);
+                                    });
+                                    $('#image').val('');
+                                }
+                            });
+                        });
+
+                    }
+                })
+            }
+      </script>
+</body>
+</html>

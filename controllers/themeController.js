@@ -12,7 +12,7 @@ exports.insertTheme = async(req,res,next)=>{
         subject : req.body.subject,
         material : req.body.material
     }
-    var checkAuto = await Auto.findOne({name:req.body.auto})
+    var checkAuto = await Auto.findOne({name:req.body.auto , department_id : req.user.department_id})
     if(checkAuto == null){
         Auto.insertMany({
             name : req.body.auto ,
@@ -212,12 +212,20 @@ exports.myInfoTheme = (req,res,next)=>{
         })
     })
 }
-exports.myEditTheme = (req,res,next)=>{
-    //console.log(req.body)
+exports.myEditTheme = async(req,res,next)=>{
+    console.log(req.body)
     req.body._id = new Objectid(req.body._id)
+    var checkAuto = await Auto.findOne({name:req.body.auto , department_id : req.user.department_id})
+    if(checkAuto == null){
+        Auto.insertMany({
+            name : req.body.auto ,
+            department_id : req.user.department_id
+        })
+    }
     var obj = {
         subject : req.body.subject,
-        material : req.body.material
+        material : req.body.material,
+        auto : req.body.auto
     }
     Theme.findByIdAndUpdate({_id:req.body._id},obj,(err,data)=>{
         if(err){return res.status(500).send(err);}

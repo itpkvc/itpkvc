@@ -53,6 +53,7 @@ router.post('/auto',(req,res)=>{
              }
   });
 });
+router.get('/theme_edit',authMiddleware.isLoggedLocal,authMiddleware.WhereDB, pageController.theme_edit)
 router.get('/create_theme',authMiddleware.isLoggedLocal,authMiddleware.WhereDB, pageController.create_theme)
 router.get('/',authMiddleware.isLoggedAll, pageController.index)
 router.get('/forgot',authMiddleware.isLoggedAll,pageController.forgot)

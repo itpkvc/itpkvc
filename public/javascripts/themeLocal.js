@@ -84,7 +84,7 @@ function btn_auto(auto_p){
 }
 function findTheme(auto_p){
     var div = document.getElementById('findAll');
-    console.log(auto_p)
+    //console.log(auto_p)
     div.innerHTML = ''
     $.post( "/findTheme",{auto : auto_p}, function( data ) {
         //console.log(data)

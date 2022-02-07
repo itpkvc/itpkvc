@@ -66,6 +66,7 @@ function findTheme(auto_p){
                         nickname = 'ไม่ระบุ'
                     }
                     var divHead = document.getElementById('findAll');
+                    divHead.innerHTML = ''
                     if(resultImage.length == 0){
                         let row = document.createElement("div");
                         let col = document.createElement("div");

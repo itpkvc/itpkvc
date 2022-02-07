@@ -62,6 +62,7 @@
                     </div> -->
                     <div class="col-12 mt-3">
                         <% autos.forEach(function(auto){ %>
+                            <div class="d-inline btn btn-info " onclick="all_()" > ทั้งหมด</div> 
                             <div class="d-inline btn btn-info " onclick="btn_auto('<%= auto.name %>')"> <%= auto.name %></div>   
                         <% }); %>
                     </div>
@@ -209,7 +210,9 @@
     <script>
      var them_id = '<%= them_id  %>'
      var uri = window.location.toString(); 
-
+     function all_(){
+            location.reload();
+        }
    
      $(document).ready( function() {
          

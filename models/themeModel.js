@@ -5,6 +5,7 @@ const themeSchema = new Schema({
     subject : { type : String , trim : true},
     user_id : Schema.Types.ObjectId,
     department_id : Schema.Types.ObjectId,
+    auto : {type : String},
     material : {type : String},
     updated : { type : Date , default : Date.now }
 })

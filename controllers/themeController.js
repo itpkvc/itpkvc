@@ -1,14 +1,23 @@
 const Theme = require('../models/themeModel');
 const ThemeImage = require('../models/themeImageModel');
 const Chat = require('../models/chatModel');
+const Auto = require('../models/autoModel');
 const fs = require('fs');
 var Objectid = require('mongodb').ObjectID;
-exports.insertTheme = (req,res,next)=>{
+exports.insertTheme = async(req,res,next)=>{
     obj = {
         user_id : req.user._id,
         department_id : req.user.department_id,
+        auto : req.body.auto,
         subject : req.body.subject,
         material : req.body.material
+    }
+    var checkAuto = await Auto.findOne({name:req.body.auto})
+    if(checkAuto == null){
+        Auto.insertMany({
+            name : req.body.auto ,
+            department_id : req.user.department_id
+        })
     }
     Theme.insertMany(obj,(err,data)=>{
         if(err){return res.status(500).send(err)}
@@ -42,18 +51,30 @@ exports.deleteThemeImage =(req,res,next)=>{
     })
 }
 exports.findTheme = (req,res,next) =>{
+ 
     req.user.department_id = new Objectid(req.user.department_id)
     var department
+    var auto = {$exists: true}
     if(req.user.role == 'system'){
         department ={$exists: true}
     }else{
         department = req.user.department_id
     }
-    
+    if(req.body.auto !== undefined){
+        auto = req.body.auto
+    }
     Theme.aggregate([
-        {
-            $match: { department_id: department }
-        },
+        // {
+        //     $match: { department_id: department }
+        // },
+        { 
+            $match: {
+                 $and: [ 
+                    { department_id: department }, 
+                     {auto: auto} 
+                 ]
+            }
+          },
         {
             "$lookup": {
                 "from": "users",

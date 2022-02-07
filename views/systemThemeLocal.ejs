@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>วิทยาลัยอาชีวศึกษาภูเก็ต</title>
     <link rel="icon" href="/images/loginLogo.png">
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     <link rel="stylesheet" href="/stylesheets/webBoard.css">
 </head>
 <body class="hold-transition sidebar-mini layout-fixed ml-4 mr-4" data-panel-auto-height-mode="height">
@@ -29,7 +30,8 @@
                     </div>   
                 </div>
                 <div class="row">
-                    <div class="col-12">
+                    <div class="col-6"></div>
+                    <div class="col-6">
                         <div class="input-group  mt-3 " onclick="searchTheme()">
                             <div class="input-group-prepend">
                                 <div class="input-group-text font-weight-bold">ค้นหากระทู้ที่ต้องการ</div>
@@ -39,6 +41,22 @@
                                 <div class="input-group-text  bg-primary rounded">ค้นหา</div>
                             </div>
                         </div>
+                    </div>
+                    <div class="col-12" >
+                        <div class="input-group  mt-3" >
+                            <div class="input-group-prepend">
+                                <div class="input-group-text font-weight-bold">ค้นหาหัวข้อกระทู้</div>
+                            </div>
+                            <input  class="form-control tags" type="text"  placeholder="ค้นหา" >
+                            <div class="input-group-prepend">
+                                <div class="input-group-text  bg-primary rounded btn" id="auto_s">ค้นหา</div>
+                            </div>
+                        </div>
+                      </div>
+                      <div class="col-12 mt-3">
+                        <% autos.forEach(function(auto){ %>
+                            <div class="d-inline btn btn-info " onclick="btn_auto('<%= auto.name %>')"> <%= auto.name %></div>   
+                        <% }); %>
                     </div>
                 </div>
             </div>
@@ -90,6 +108,32 @@
        
     <script>
         var uri = window.location.toString(); 
+        $(document).ready( function() {
+         
+         $(".tags").autocomplete({
+             source:function(req,res){
+                 $.ajax({
+                     url:'/auto',
+                     method:'post',
+                     dataType:'json',
+                     data:{'auto':req.term},
+                     success:function(data){ 
+                         var x = new Array();
+                             $.each(data.data,(index,values)=>{
+                                 console.log(values.name)
+                                 x.push({'value':values.name});
+                         });
+                         res(x)
+                     },
+                     error:function(){
+                         alert('server error occured')
+                     }
+                 });
+             }
+         });
+ 
+      
+     });
     </script>  
      <script type="text/javascript" src="/javascripts/systemThemeLocal.js"></script>  
 </body>

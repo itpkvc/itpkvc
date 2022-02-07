@@ -8,7 +8,7 @@ $(document).ready(function(){
     });
 });
 searchTheme=()=>{
-    $.get( "/findTheme", function(data) {
+    $.post( "/findTheme", function(data) {
         //console.log(data)
         $('#searchBody').html('');
         $('#searchThemeOne').val('');
@@ -33,9 +33,22 @@ searchTheme=()=>{
         });
         $("#searchThemeModal").modal();
     })
-}        //get find theme
+}
 $( document ).ready(function() {
-    $.get( "/findTheme", function( data ) {
+    findTheme();
+    $( "#auto_s" ).click(function() { 
+        var auto_p = $(".tags").val()  
+        findTheme($(".tags").val() );
+    });
+
+}) 
+function btn_auto(auto_p){
+    //console.log(auto_p)
+    findTheme(auto_p)
+}       
+//get find theme
+function findTheme(auto_p){
+    $.post( "/findTheme",{auto : auto_p}, function( data ) {
         //console.log(data)
         $.each(data, function(key, value) {
             var obj = {theme_id : value._id}
@@ -74,7 +87,7 @@ $( document ).ready(function() {
                         small.innerHTML += `<img src="/upload/${value.user.image}" class="rounded-circle" style="width: 40px; height: 40px; object-fit: cover;">`
                         small.innerHTML += `${'  ' +value.user.firstname + ' ' + value.user.lastname + ' '}`
                         small.innerHTML += `(${value.user.nickname + ' ' }) เเผนก ${value.department.name}`
-                        small.innerHTML += `${date}`
+                        small.innerHTML += `${date + ' '}  <span class="bg-warning">#${ value.auto}</span>`
                         paragraph.innerHTML += value.material
                         div1.append(header,small,paragraph)
                         //for div 2
@@ -110,7 +123,7 @@ $( document ).ready(function() {
                         small.innerHTML += `<img src="/upload/${value.user.image}" class="rounded-circle" style="width: 40px; height: 40px; object-fit: cover;">`
                         small.innerHTML += `${'  ' +value.user.firstname + ' ' + value.user.lastname + ' '}`
                         small.innerHTML += `(${value.user.nickname + ' ' }) เเผนก ${value.department.name}`
-                        small.innerHTML += `${date}`
+                        small.innerHTML += `${date + ' '}  <span class="bg-warning">#${ value.auto}</span>`
                         paragraph.innerHTML += value.material
                         div2_1.append(header,small,paragraph)
                         //for col2 div 2
@@ -133,8 +146,8 @@ $( document ).ready(function() {
             });
         });
     });
+}
 
-})
 goChat=(idTheme)=>{
     window.location.href = '/chat?idTheme='+idTheme
 }

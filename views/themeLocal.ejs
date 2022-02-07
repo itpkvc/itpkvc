@@ -7,6 +7,7 @@
     <title>วิทยาลัยอาชีวศึกษาภูเก็ต</title>
     <link rel="icon" href="/images/loginLogo.png">
     <link rel="stylesheet" href="/stylesheets/webBoard.css">
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 </head>
 <body class="hold-transition sidebar-mini layout-fixed ml-4 mr-4" data-panel-auto-height-mode="height">
     <div class="wrapper">
@@ -20,29 +21,54 @@
         <!-- Content Wrapper. Contains page content -->
         <div class="content-wrapper iframe-mode" data-widget="iframe" data-loading-screen="750">    
             <div class="container mb-3">
-                <div class="col-12">
-                    <div class="input-group  mt-3 " onclick="searchTheme()">
-                        <div class="input-group-prepend">
-                            <div class="input-group-text font-weight-bold">ค้นหากระทู้ที่ต้องการ</div>
+                <div class="row">
+                    <div class="col-6 mt-3">
+                        <a href="/create_theme" class="btn btn-success" >ตั้งกระทู้ของฉัน</a>
+                    </div>
+                    <div class="col-6">
+                        <div class="input-group  mt-3 " onclick="searchTheme()">
+                            <div class="input-group-prepend">
+                                <div class="input-group-text font-weight-bold">ค้นหาเเชทรูม</div>
+                            </div>
+                            <input  class="form-control" type="text" placeholder="Search.." disabled>
+                            <div class="input-group-prepend">
+                                <div class="input-group-text  bg-primary rounded">ค้นหา</div>
+                            </div>
+                          
                         </div>
-                        <input  class="form-control" type="text" placeholder="Search.." disabled>
-                        <div class="input-group-prepend">
-                            <div class="input-group-text  bg-primary rounded">ค้นหา</div>
+    
+                    </div> 
+                    <div class="col-12" >
+                        <div class="input-group  mt-3" >
+                            <div class="input-group-prepend">
+                                <div class="input-group-text font-weight-bold">ค้นหาหัวข้อกระทู้</div>
+                            </div>
+                            <input  class="form-control tags" type="text"  placeholder="ค้นหา" >
+                            <div class="input-group-prepend">
+                                <div class="input-group-text  bg-primary rounded btn" id="auto_s">ค้นหา</div>
+                            </div>
                         </div>
+                      </div>
+                    <!-- <div class="col-12">
+                        <div class="input-group  mt-3" data-toggle="modal" data-target="#themeModal" >
+                            <div class="input-group-prepend">
+                                <div class="input-group-text font-weight-bold">ตั้งกระทู้ของฉัน</div>
+                            </div>
+                            <input  class="form-control" type="text" placeholder="กระทู้อะไรดี" disabled>
+                            <div class="input-group-prepend">
+                                <div class="input-group-text  bg-primary rounded">ตกลง</div>
+                            </div>
+                        </div>
+                    </div> -->
+                    <div class="col-12 mt-3">
+                        <% autos.forEach(function(auto){ %>
+                            <div class="d-inline btn btn-info " onclick="btn_auto('<%= auto.name %>')"> <%= auto.name %></div>   
+                        <% }); %>
                     </div>
                 </div>
-                <div class="col-12">
-                    <div class="input-group  mt-3" data-toggle="modal" data-target="#themeModal" >
-                        <div class="input-group-prepend">
-                            <div class="input-group-text font-weight-bold">ตั้งกระทู้ของฉัน</div>
-                        </div>
-                        <input  class="form-control" type="text" placeholder="กระทู้อะไรดี" disabled>
-                        <div class="input-group-prepend">
-                            <div class="input-group-text  bg-primary rounded">ตกลง</div>
-                        </div>
-                    </div>
-                </div>
+             
             </div>
+          
             <div class="container"  id="findAll">
                   
             </div>
@@ -100,6 +126,15 @@
                                 </div>
                             </div>
                             <div class="col-12">
+                                <div class="input-group ui-autocomplete  mt-3" >
+                                    <div class="input-group-prepend">
+                                        <div class="input-group-text font-weight-bold">ประเภทกระทู้</div>
+                                    </div>
+                                    <input  class="form-control tags1" type="text"  placeholder="ประเภทกระทู้"  >
+                                    
+                                </div>
+                            </div>
+                            <div class="col-12">
                                 <div class="form-group">
                                     <label class="ml-2">เนื้อหา :</label>
                                     <textarea class="form-control" id="material" name="material" rows="10"></textarea>
@@ -123,6 +158,7 @@
                   </div>
                 </div>
             </div>
+            
             <!-- //theme -->
             <!-- imageTheme -->
             <div class="modal fade bd-example-modal-lg" id="themeImageModal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
@@ -173,6 +209,34 @@
     <script>
      var them_id = '<%= them_id  %>'
      var uri = window.location.toString(); 
+
+   
+     $(document).ready( function() {
+         
+        $(".tags").autocomplete({
+            source:function(req,res){
+                $.ajax({
+                    url:'/auto',
+                    method:'post',
+                    dataType:'json',
+                    data:{'auto':req.term},
+                    success:function(data){ 
+                        var x = new Array();
+                            $.each(data.data,(index,values)=>{
+                                console.log(values.name)
+                                x.push({'value':values.name});
+                        });
+                        res(x)
+                    },
+                    error:function(){
+                        alert('server error occured')
+                    }
+                });
+            }
+        });
+
+     
+    });
     </script>  
     <script type="text/javascript" src="/javascripts/themeLocal.js"></script>
 </body>

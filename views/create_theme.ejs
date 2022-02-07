@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/stylesheets/webBoard.css">
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <title>วิทยาลัยอาชีวศึกษาภูเก็ต</title>
+    <link rel="icon" href="/images/loginLogo.png">
+</head>
+<body class="hold-transition sidebar-mini layout-fixed" data-panel-auto-height-mode="height">
+    <div class="wrapper">
+        <!-- Navbar -->
+        <%- include('privateTop'); -%>
+        <!-- /.navbar -->
+
+        <!-- Main Sidebar Container -->
+        <%- include('systemLeft'); -%>
+
+        <!-- Content Wrapper. Contains page content -->
+        <div class="content-wrapper iframe-mode" data-widget="iframe" data-loading-screen="750">
+            <!-- theme -->
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-12">
+                        <form id="formTheme" action="/insertTheme" method="POST">
+                            <div class="col-12 text-center mt-3">
+                                <h4 class="font-weight-bold">สร้างกระทู้</h4>
+                            </div>
+                            <div class="col-12">  
+                                <div class="input-group mb-2">
+                                <div class="input-group-prepend">
+                                    <div class="input-group-text font-weight-bold">ชื่อเรื่อง</div>
+                                </div>
+                                <input type="text" class="form-control" id="subject" name="subject" placeholder="ชื่อเรื่อง">
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="input-group ui-autocomplete  mt-3" >
+                                    <div class="input-group-prepend">
+                                        <div class="input-group-text font-weight-bold">ประเภทกระทู้</div>
+                                    </div>
+                                    <input  class="form-control tags" type="text" name="auto" id="auto"  placeholder="ประเภทกระทู้"  >
+                                    
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="form-group">
+                                    <label class="ml-2">เนื้อหา :</label>
+                                    <textarea class="form-control" id="material" name="material" rows="10"></textarea>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="form-group text-right btnTheme">
+                                    <div class="d-inline ">
+                                        <button type="submit" class="btn btn-primary" onclick="saveTheme()">ตกลง</button> 
+                                    </div>
+                                    <div class="d-inline ">
+                                        <button type="reset" class="btn btn-secondary">ล้างข้อมูล</button> 
+                                    </div>
+                                    <div class="d-inline ">
+                                        <button class="btn btn-danger" data-dismiss="modal">ยกเลิก</button> 
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- //theme -->
+        </div>
+        <!-- /.content-wrapper -->
+
+        <!-- footer -->
+        
+
+        <!-- Control Sidebar -->
+        <!-- <aside class="control-sidebar control-sidebar-dark">
+         
+        </aside> -->
+        <!-- /.control-sidebar -->
+      </div>
+      <script>
+           saveTheme=()=>{
+            event.preventDefault();
+            var form = document.forms["formTheme"]
+            var subject = $('#subject').val();
+            var tags = $('.tags').val();
+            if(subject == ''){
+                Swal.fire({
+                title: 'เกิดข้อพิดพลาด?',
+                text: "กรุณาใส่ชื่อเรื่อง!",
+                icon: 'question',
+                confirmButtonColor: '#dc143c',
+                confirmButtonText: 'ตกลง'
+                })
+            }else if(tags == ''){
+                Swal.fire({
+                title: 'เกิดข้อพิดพลาด?',
+                text: "กรุณาใส่ชื่อเเท็ก!",
+                icon: 'question',
+                confirmButtonColor: '#dc143c',
+                confirmButtonText: 'ตกลง'
+                })
+            }
+            else{
+                form.submit();   
+            }
+        }
+          $(document).ready( function() {
+            $(".tags").autocomplete({
+                source:function(req,res){
+                    $.ajax({
+                        url:'/auto',
+                        method:'post',
+                        dataType:'json',
+                        data:{'auto':req.term},
+                        success:function(data){ 
+                            var x = new Array();
+                                $.each(data.data,(index,values)=>{
+                                    console.log(values.name)
+                                    x.push({'value':values.name});
+                            });
+                            res(x)
+                        },
+                        error:function(){
+                            alert('server error occured')
+                        }
+                    });
+                }
+            });
+
+        
+        });
+      </script>
+</body>
+</html>

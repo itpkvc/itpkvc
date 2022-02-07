@@ -90,7 +90,7 @@ $( document ).ready(function() {
                                 <h4 class="font-weight-bold mt-2 showSubject">${value.subject}</h4>
                                 <img src="/upload/${value.user.image}" class="rounded-circle" style="width: 40px; height: 40px; object-fit: cover;">
                                 <small class="font-weight-bold">โดย ${value.user.firstname + ' ' + value.user.lastname +
-                            ' ('+nickname +') '+ ' ' + 'เเผนก' + ' ' +  value.department.name + ' ' + date}</small>
+                            ' ('+nickname +') '+ ' ' + 'เเผนก' + ' ' +  value.department.name + ' ' + date + ' '} <span class="bg-warning">#${ value.auto}</span></small>
                                 <p class="hiddenText">
                                     ${value.material}
                                 </p>
@@ -114,7 +114,7 @@ $( document ).ready(function() {
                                     <h4 class="font-weight-bold showSubject ">${value.subject}</h4>
                                     <img src="/upload/${value.user.image}" class="rounded-circle" style="width: 40px; height: 40px; object-fit: cover;">
                                     <small class="font-weight-bold">โดย ${value.user.firstname + ' ' + value.user.lastname +
-                            ' ('+nickname +') '+ ' ' + 'เเผนก' + ' ' +  value.department.name + ' ' + date}</small>
+                            ' ('+nickname +') '+ ' ' + 'เเผนก' + ' ' +  value.department.name + ' ' + date + ' '} <span class="bg-warning">#${ value.auto}</span></small>
                                     <p class="hiddenText">
                                         ${value.material}
                                     </p>

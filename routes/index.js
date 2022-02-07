@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 var mongoose = require('mongoose')
 const User = require('../models/userModel');
+const Auto = require('../models/autoModel');
 const passport = require('passport');
 const authController = require('../controllers/authController');
 const newsController = require('../controllers/newsController');
@@ -43,6 +44,16 @@ const upload = multer({
 //   res.setHeader('Access-Control-Allow-Credentials', true); // If needed
 //   next();
 // });
+router.post('/auto',(req,res)=>{
+  Auto.find({name:{'$regex':req.body.auto},department_id:req.user.department_id},(err,autoData)=>{
+             if(err){
+                 console.log(err);
+             }else{
+                 res.json({data:autoData});
+             }
+  });
+});
+router.get('/create_theme',authMiddleware.isLoggedLocal,authMiddleware.WhereDB, pageController.create_theme)
 router.get('/',authMiddleware.isLoggedAll, pageController.index)
 router.get('/forgot',authMiddleware.isLoggedAll,pageController.forgot)
 router.get('/reset',authMiddleware.isLoggedAll,pageController.reset)
@@ -55,7 +66,7 @@ router.get('/themeLocal',authMiddleware.isLoggedLocal,authMiddleware.WhereDB,pag
 router.post('/insertTheme',authMiddleware.isLoggedLocal,authMiddleware.WhereDB,themeController.insertTheme);
 router.post('/insertThemeImage',authMiddleware.isLoggedLocal,authMiddleware.WhereDB,upload.single("image"),themeController.insertThemeImage);
 router.post('/deleteThemeImage',authMiddleware.isLoggedLocal,authMiddleware.WhereDB,themeController.deleteThemeImage);
-router.get('/findTheme',authMiddleware.isLoggedLocal,authMiddleware.WhereDB,themeController.findTheme);
+router.post('/findTheme',authMiddleware.isLoggedLocal,authMiddleware.WhereDB,themeController.findTheme);
 router.post('/findThemeImage',authMiddleware.isLoggedLocal,authMiddleware.WhereDB,themeController.findThemeImage);
 router.get('/myThemeLocal',authMiddleware.isLoggedLocal,authMiddleware.WhereDB,pageController.myThemeLocal);
 router.get('/myFindTheme',authMiddleware.isLoggedLocal,authMiddleware.WhereDB,themeController.myFindTheme);

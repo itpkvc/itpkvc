@@ -8,7 +8,7 @@ $(document).ready(function(){
     });
 });
 searchTheme=()=>{
-    $.get( "/findTheme", function(data) {
+    $.post( "/findTheme", function(data) {
         //console.log(data)
         $('#searchBody').html('');
         $('#searchThemeOne').val('');
@@ -64,9 +64,29 @@ $('#themeImageModal').on('hidden.bs.modal', function () {
     })
   
 })
+
+
 $( document ).ready(function() {
+    
+    findTheme();
+    $( "#auto_s" ).click(function() { 
+        var auto_p = $(".tags").val()  
+        findTheme($(".tags").val() );
+    });
+   
+  
+ 
+   
+})
+function btn_auto(auto_p){
+    //console.log(auto_p)
+    findTheme(auto_p)
+}
+function findTheme(auto_p){
     var div = document.getElementById('findAll');
-    $.get( "/findTheme", function( data ) {
+    console.log(auto_p)
+    div.innerHTML = ''
+    $.post( "/findTheme",{auto : auto_p}, function( data ) {
         //console.log(data)
         $.each(data, function(key, value) {
             var obj = {theme_id : value._id}
@@ -92,7 +112,7 @@ $( document ).ready(function() {
                                     <h4 class="font-weight-bold showSubject">${value.subject}</h4>
                                     <img src="/upload/${value.user.image}" class="rounded-circle" style="width: 40px; height: 40px; object-fit: cover;">
                                     <small class="font-weight-bold">โดย ${value.user.firstname + ' ' + value.user.lastname +
-                                    ' ('+nickname +') '+ ' ' + 'เเผนก' + ' ' +  value.department.name + ' ' + date}</small>
+                                    ' ('+nickname +') '+ ' ' + 'เเผนก' + ' ' +  value.department.name + ' ' + date + ' ' } <span class="bg-warning">#${ value.auto}</span> </small>
                                     <p class="hiddenText">
                                         ${value.material}
                                     </p>
@@ -114,7 +134,7 @@ $( document ).ready(function() {
                                 <h4 class="font-weight-bold showSubject">${value.subject}</h4>
                                 <img src="/upload/${value.user.image}" class="rounded-circle" style="width: 40px; height: 40px; object-fit: cover;">
                                 <small class="font-weight-bold">โดย ${value.user.firstname + ' ' + value.user.lastname +
-                                ' ('+nickname +') '+ ' ' + 'เเผนก' + ' ' +  value.department.name + ' ' + date}</small>
+                                ' ('+nickname +') '+ ' ' + 'เเผนก' + ' ' +  value.department.name + ' ' + date + ' '} <span class="bg-warning">#${ value.auto}</span></small>
                                 <p class="hiddenText">
                                     ${value.material}
                                 </p>
@@ -139,8 +159,7 @@ $( document ).ready(function() {
             });
         });
     });
-   
-})
+}
 goChat=(idTheme)=>{
     window.location.href = '/chat?idTheme='+idTheme
 }

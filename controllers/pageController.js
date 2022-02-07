@@ -1,5 +1,6 @@
 const User = require('../models/userModel'); //Model DB
 const Department = require('../models/departModel');
+const Auto = require('../models/autoModel');
 const News = require("../models/newsModel");
 const moment = require("moment")
 const authMiddleware = require('../middlewares/authMiddleware');
@@ -10,6 +11,9 @@ exports.index=async(req,res,next)=>{
     var message = req.query.message
 
     res.render('index', {message});
+}
+exports.create_theme = (req,res) =>{
+    res.render('create_theme')
 }
 exports.news = async(req,res) =>{
     var user = req.user
@@ -304,18 +308,22 @@ exports.systemEditUser= async(req,res,next)=>{
         return res.render('systemUserEdit',{infoEdit:data,department:department,message ,user_});
     })   
 }
-exports.systemThemeLocal = (req,res,next)=>{
+exports.systemThemeLocal = async(req,res,next)=>{
     var them_id = req.query.id
+    var autos = await Auto.find({department_id:req.user.department_id}).limit(10).sort({ updated: -1 })
     res.render('systemThemeLocal',{
-        them_id
+        them_id ,
+        autos
     })
 }
 //-------------------------------------------------------local------------------------------
 
-exports.themeLocal = (req,res,next) => {
+exports.themeLocal = async(req,res,next) => {
     var them_id = req.query.id
+    var autos = await Auto.find({department_id:req.user.department_id}).limit(10).sort({ updated: -1 })
     res.render('themeLocal',{
-        them_id
+        them_id,
+        autos
     });
 }
 exports.myThemeLocal = (req,res,next) =>{

@@ -54,8 +54,9 @@
                         </div>
                       </div>
                       <div class="col-12 mt-3">
+                        <div class="d-inline btn btn-info " onclick="all_()" > ทั้งหมด</div>   
                         <% autos.forEach(function(auto){ %>
-                            <div class="d-inline btn btn-info " onclick="all_()" > ทั้งหมด</div>   
+                          
                             <div class="d-inline btn btn-info " onclick="btn_auto('<%= auto.name %>')"> <%= auto.name %></div>   
                         <% }); %>
                     </div>

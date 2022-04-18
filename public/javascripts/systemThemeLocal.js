@@ -50,6 +50,8 @@ function btn_auto(auto_p){
 function findTheme(auto_p){
     $.post( "/findTheme",{auto : auto_p}, function( data ) {
         //console.log(data)
+         var divHead = document.getElementById('findAll');
+         divHead.innerHTML = ''
         $.each(data, function(key, value) {
             var obj = {theme_id : value._id}
             $.ajax({
@@ -65,8 +67,7 @@ function findTheme(auto_p){
                     if(nickname == ''){
                         nickname = 'ไม่ระบุ'
                     }
-                    var divHead = document.getElementById('findAll');
-                    divHead.innerHTML = ''
+                   
                     if(resultImage.length == 0){
                         let row = document.createElement("div");
                         let col = document.createElement("div");
